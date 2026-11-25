@@ -201,14 +201,12 @@ box.innerHTML = "";
 var topics = (lang === "py") ? db.py : db.cpp;
 topics.forEach(function(t, i) {
 var done = 0;
-t.list.forEach(function(, j) {
-if (localStorage.getItem("ok" + lang + "" + i + "" + j) === "1") done++;
-});
-var card = document.createElement("div");
-card.className = "topic-card";
-card.innerHTML = "" + t.name + "" + t.desc + "Решено: " + done + " / " + t.list.length + "";
-var btn = document.createElement("button");
-btn.className = "btn-topic";
+        t.list.forEach(function(_, j) {
+            if (localStorage.getItem("ok_" + lang + "_" + i + "_" + j) === "1") done++;
+        });
+        var card = document.createElement("div");
+        card.className = "topic-card";
+        card.innerHTML = "<div><h3 style='margin:0 0 6px;color:#38bdf8;'>" + t.name + "</h3><p style='margin:0;color:#94a3b8;'>" + t.desc + "</p><div style='color:#4ade80;font-size:13px;margin-top:6px;'>Решено: " + done + " / " + t.list.length + "</div></div>";
 btn.textContent = "Решать →";
 btn.onclick = function() { startTopic(i); };
 card.appendChild(btn);
