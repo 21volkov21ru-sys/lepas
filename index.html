@@ -138,44 +138,45 @@ var db = {
             ]
         }
     ],
-    cpp: [
+        cpp: [
         {
-            name: "Тема 1. Вывод данных std::cout",
-            desc: "Библиотека iostream и вывод строк и чисел (6 задач).",
+            name: 'Тема 1. Вывод данных std::cout',
+            desc: 'Библиотека iostream и вывод строк и чисел (6 задач).',
             list: [
-                { t: "Задача 1: Вывод текста", th: "<pre>std::cout &lt;&lt; \"Hi\";</pre>", d: "Выведи \"Hello C++\".", s: "#include <iostream>" + NL + "int main() {" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "Hello C++", req: ["cout", "\"Hello C++\"", ";"] },
-                { t: "Задача 2: Вывод числа", th: "<pre>std::cout &lt;&lt; 2026;</pre>", d: "Выведи число 2026.", s: "#include <iostream>" + NL + "int main() {" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "2026", req: ["cout", "2026", ";"] },
-                { t: "Задача 3: Сложение", th: "<pre>std::cout &lt;&lt; 40 + 60;</pre>", d: "Выведи сумму 40 + 60.", s: "#include <iostream>" + NL + "int main() {" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "100", req: ["cout", "40", "60", ";"] },
-{ t: "Задача 4: Цепочка <<", th: '<pre>std::cout &lt;&lt; "A" &lt;&lt; "B";</pre>', d: 'Выведи "C++" и "Top" через <<.', s: '#include <iostream>' + NL + 'int main() {' + NL + '    ' + NL + '    return 0;' + NL + '}', ans: "C++Top", req: ['cout', '"C++"', '"Top"', ';'] },
-{ t: "Задача 5: Перенос endl", th: "std::cout << 5 << std::endl;", d: "Выведи 5 и std::endl.", s: "#include " + NL + "int main() {" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "5", req: ["cout", "5", "endl", ";"] },
-{ t: "Задача 6: namespace std", th: "using namespace std;" + NL + "cout << "Ready";", d: "Добавь using namespace std; и выведи "Ready".", s: "#include " + NL + NL + "int main() {" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "Ready", req: ["using namespace std;", "cout", ""Ready"", ";"] }
-]
-},
-{
-name: "Тема 2. Переменные int и ввод cin",
-desc: "Работа с целыми числами и чтение данных (6 задач).",
-list: [
-{ t: "Задача 1: Переменная int", th: "int level = 15;" + NL + "std::cout << level;", d: "Объяви int level = 15; и выведи её.", s: "#include " + NL + "int main() {" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "15", req: ["int", "level", "15", "cout", ";"] },
-{ t: "Задача 2: Сумма a + b", th: "std::cout << a + b;", d: "Выведи a + b.", s: "#include " + NL + "int main() {" + NL + "    int a = 12, b = 30;" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "42", req: ["cout", "a + b", ";"] },
-{ t: "Задача 3: Умножение", th: "std::cout << w * h;", d: "Выведи w * h.", s: "#include " + NL + "int main() {" + NL + "    int w = 7, h = 9;" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "63", req: ["cout", "w * h", ";"] },
-{ t: "Задача 4: Остаток %", th: "std::cout << 25 % 4;", d: "Выведи 25 % 4.", s: "#include " + NL + "int main() {" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "1", req: ["cout", "25 % 4", ";"] },
-{ t: "Задача 5: Прибавление +=", th: "score += 25;" + NL + "std::cout << score;", d: "Прибавь 25 к score и выведи.", s: "#include " + NL + "int main() {" + NL + "    int score = 50;" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "75", req: ["score", "25", "cout", ";"] },
-{ t: "Задача 6: Ввод cin", th: "std::cin >> n;", d: "Считай число в n через std::cin >> n;.", s: "#include " + NL + "int main() {" + NL + "    int n;" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "Ввод n готов", req: ["cin", ">>", "n", ";"] }
-]
-},
-{
-name: "Тема 3. Условия if и циклы for",
-desc: "Ветвления if/else и повторения for/while (6 задач).",
-list: [
-{ t: "Задача 1: Условие if", th: "if (x > 5) { std::cout << "Yes"; }", d: "Если x > 5, выведи "Yes".", s: "#include " + NL + "int main() {" + NL + "    int x = 10;" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "Yes", req: ["if", "x > 5", "cout", ""Yes"", ";"] },
-{ t: "Задача 2: Равенство ==", th: "if (code == 777) { std::cout << "Win"; }", d: "Если code == 777, выведи "Win".", s: "#include " + NL + "int main() {" + NL + "    int code = 777;" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "Win", req: ["if", "code == 777", "cout", ""Win"", ";"] },
-{ t: "Задача 3: Ветка else", th: "else { std::cout << "No"; }", d: "Допиши else с выводом "No".", s: "#include " + NL + "int main() {" + NL + "    int a = 2;" + NL + "    if (a > 5) { std::cout << "Yes"; }" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "No", req: ["else", "cout", ""No"", ";"] },
-{ t: "Задача 4: Цикл for (0..4)", th: "for (int i = 0; i < 5; i++) { std::cout << i; }", d: "Напиши цикл for от 0 до 4 и выведи i.", s: "#include " + NL + "int main() {" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "01234", req: ["for", "int i = 0", "i < 5", "i++", "cout"] },
-{ t: "Задача 5: Цикл for (1..3)", th: "for (int i = 1; i <= 3; i++) { std::cout << i; }", d: "Напиши цикл от 1 до 3 и выведи i.", s: "#include " + NL + "int main() {" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "123", req: ["for", "int i = 1", "i <= 3", "i++", "cout"] },
-{ t: "Задача 6: Цикл while", th: "while (n > 0) { n--; }", d: "Напиши цикл while (n > 0) и внутри n--;.", s: "#include " + NL + "int main() {" + NL + "    int n = 3;" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "Готово", req: ["while", "n > 0", "n--", ";"] }
-]
-}
-]
+                { t: 'Задача 1: Вывод текста', th: '<pre>std::cout &lt;&lt; "Hi";</pre>', d: 'Выведи "Hello C++".', s: '#include <iostream>' + NL + 'int main() {' + NL + '    ' + NL + '    return 0;' + NL + '}', ans: 'Hello C++', req: ['cout', '"Hello C++"', ';'] },
+                { t: 'Задача 2: Вывод числа', th: '<pre>std::cout &lt;&lt; 2026;</pre>', d: 'Выведи число 2026.', s: '#include <iostream>' + NL + 'int main() {' + NL + '    ' + NL + '    return 0;' + NL + '}', ans: '2026', req: ['cout', '2026', ';'] },
+                { t: 'Задача 3: Сложение', th: '<pre>std::cout &lt;&lt; 40 + 60;</pre>', d: 'Выведи сумму 40 + 60.', s: '#include <iostream>' + NL + 'int main() {' + NL + '    ' + NL + '    return 0;' + NL + '}', ans: '100', req: ['cout', '40', '60', ';'] },
+                { t: 'Задача 4: Цепочка <<', th: '<pre>std::cout &lt;&lt; "A" &lt;&lt; "B";</pre>', d: 'Выведи "C++" и "Top" через <<.', s: '#include <iostream>' + NL + 'int main() {' + NL + '    ' + NL + '    return 0;' + NL + '}', ans: 'C++Top', req: ['cout', '"C++"', '"Top"', ';'] },
+                { t: 'Задача 5: Перенос endl', th: '<pre>std::cout &lt;&lt; 5 &lt;&lt; std::endl;</pre>', d: 'Выведи 5 и std::endl.', s: '#include <iostream>' + NL + 'int main() {' + NL + '    ' + NL + '    return 0;' + NL + '}', ans: '5', req: ['cout', '5', 'endl', ';'] },
+                { t: 'Задача 6: namespace std', th: '<pre>using namespace std;' + NL + 'cout &lt;&lt; "Ready";</pre>', d: 'Добавь using namespace std; и выведи "Ready".', s: '#include <iostream>' + NL + NL + 'int main() {' + NL + '    ' + NL + '    return 0;' + NL + '}', ans: 'Ready', req: ['using namespace std;', 'cout', '"Ready"', ';'] }
+            ]
+        },
+        {
+            name: 'Тема 2. Переменные int и ввод cin',
+            desc: 'Работа с целыми числами и чтение данных (6 задач).',
+            list: [
+                { t: 'Задача 1: Переменная int', th: '<pre>int level = 15;' + NL + 'std::cout &lt;&lt; level;</pre>', d: 'Объяви int level = 15; и выведи её.', s: '#include <iostream>' + NL + 'int main() {' + NL + '    ' + NL + '    return 0;' + NL + '}', ans: '15', req: ['int', 'level', '15', 'cout', ';'] },
+                { t: 'Задача 2: Сумма a + b', th: '<pre>std::cout &lt;&lt; a + b;</pre>', d: 'Выведи a + b.', s: '#include <iostream>' + NL + 'int main() {' + NL + '    int a = 12, b = 30;' + NL + '    ' + NL + '    return 0;' + NL + '}', ans: '42', req: ['cout', 'a + b', ';'] },
+                { t: 'Задача 3: Умножение', th: '<pre>std::cout &lt;&lt; w * h;</pre>', d: 'Выведи w * h.', s: '#include <iostream>' + NL + 'int main() {' + NL + '    int w = 7, h = 9;' + NL + '    ' + NL + '    return 0;' + NL + '}', ans: '63', req: ['cout', 'w * h', ';'] },
+                { t: 'Задача 4: Остаток %', th: '<pre>std::cout &lt;&lt; 25 % 4;</pre>', d: 'Выведи 25 % 4.', s: '#include <iostream>' + NL + 'int main() {' + NL + '    ' + NL + '    return 0;' + NL + '}', ans: '1', req: ['cout', '25 % 4', ';'] },
+                { t: 'Задача 5: Прибавление +=', th: '<pre>score += 25;' + NL + 'std::cout &lt;&lt; score;</pre>', d: 'Прибавь 25 к score и выведи.', s: '#include <iostream>' + NL + 'int main() {' + NL + '    int score = 50;' + NL + '    ' + NL + '    return 0;' + NL + '}', ans: '75', req: ['score', '25', 'cout', ';'] },
+                { t: 'Задача 6: Ввод cin', th: '<pre>std::cin &gt;&gt; n;</pre>', d: 'Считай число в n через std::cin >> n;.', s: '#include <iostream>' + NL + 'int main() {' + NL + '    int n;' + NL + '    ' + NL + '    return 0;' + NL + '}', ans: 'Ввод n готов', req: ['cin', '>>', 'n', ';'] }
+            ]
+        },
+        {
+            name: 'Тема 3. Условия if и циклы for',
+            desc: 'Ветвления if/else и повторения for/while (6 задач).',
+            list: [
+                { t: 'Задача 1: Условие if', th: '<pre>if (x > 5) { std::cout &lt;&lt; "Yes"; }</pre>', d: 'Если x > 5, выведи "Yes".', s: '#include <iostream>' + NL + 'int main() {' + NL + '    int x = 10;' + NL + '    ' + NL + '    return 0;' + NL + '}', ans: 'Yes', req: ['if', 'x > 5', 'cout', '"Yes"', ';'] },
+                { t: 'Задача 2: Равенство ==', th: '<pre>if (code == 777) { std::cout &lt;&lt; "Win"; }</pre>', d: 'Если code == 777, выведи "Win".', s: '#include <iostream>' + NL + 'int main() {' + NL + '    int code = 777;' + NL + '    ' + NL + '    return 0;' + NL + '}', ans: 'Win', req: ['if', 'code == 777', 'cout', '"Win"', ';'] },
+                { t: 'Задача 3: Ветка else', th: '<pre>else { std::cout &lt;&lt; "No"; }</pre>', d: 'Допиши else с выводом "No".', s: '#include <iostream>' + NL + 'int main() {' + NL + '    int a = 2;' + NL + '    if (a > 5) { std::cout << "Yes"; }' + NL + '    ' + NL + '    return 0;' + NL + '}', ans: 'No', req: ['else', 'cout', '"No"', ';'] },
+                { t: 'Задача 4: Цикл for (0..4)', th: '<pre>for (int i = 0; i &lt; 5; i++) { std::cout &lt;&lt; i; }</pre>', d: 'Напиши цикл for от 0 до 4 и выведи i.', s: '#include <iostream>' + NL + 'int main() {' + NL + '    ' + NL + '    return 0;' + NL + '}', ans: '01234', req: ['for', 'int i = 0', 'i < 5', 'i++', 'cout'] },
+                { t: 'Задача 5: Цикл for (1..3)', th: '<pre>for (int i = 1; i &lt;= 3; i++) { std::cout &lt;&lt; i; }</pre>', d: 'Напиши цикл от 1 до 3 и выведи i.', s: '#include <iostream>' + NL + 'int main() {' + NL + '    ' + NL + '    return 0;' + NL + '}', ans: '123', req: ['for', 'int i = 1', 'i <= 3', 'i++', 'cout'] },
+                { t: 'Задача 6: Цикл while', th: '<pre>while (n > 0) { n--; }</pre>', d: 'Напиши цикл while (n > 0) и внутри n--;.', s: '#include <iostream>' + NL + 'int main() {' + NL + '    int n = 3;' + NL + '    ' + NL + '    return 0;' + NL + '}', ans: 'Готово', req: ['while', 'n > 0', 'n--', ';'] }
+            ]
+        }
+    ]
+
 };
 function hideViews() {
 document.getElementById("home-view").style.display = "none";
