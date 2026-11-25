@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head> 
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CodeHub — Обучение Python и C++</title>
-    <!-- Skulpt для реального выполнения Python в браузере -->
     <script src="https://jsdelivr.net"></script>
     <script src="https://jsdelivr.net"></script>
     <style>
@@ -19,14 +18,12 @@
             --success: #10b981;
         }
         body { font-family: system-ui, -apple-system, sans-serif; margin: 0; background: var(--bg-main); color: var(--text-main); }
-        
         header { background: var(--bg-card); padding: 16px 32px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
         .logo { font-size: 20px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; }
         .logo span { color: var(--accent-py); }
         .back-btn { background: transparent; color: var(--text-main); border: 1px solid var(--border); padding: 8px 16px; border-radius: 6px; cursor: pointer; display: none; }
         .back-btn:hover { background: var(--border); }
 
-        /* Главный экран */
         .hero { text-align: center; padding: 60px 20px 30px; max-width: 750px; margin: auto; }
         .hero h1 { font-size: 36px; margin-bottom: 12px; }
         .hero p { color: var(--text-muted); font-size: 18px; line-height: 1.5; }
@@ -48,7 +45,6 @@
         .btn-cpp { background: var(--accent-cpp); }
         .btn-start:hover { opacity: 0.9; }
 
-        /* Экран тренажёра */
         #lesson-view { display: none; max-width: 1200px; margin: 24px auto; padding: 0 20px; gap: 20px; flex-wrap: wrap; }
         .panel { background: var(--bg-card); padding: 24px; border-radius: 12px; flex: 1; min-width: 320px; border: 1px solid var(--border); }
         pre { background: var(--bg-main); padding: 12px; border-radius: 6px; border: 1px solid var(--border); overflow-x: auto; color: #e2e8f0; }
@@ -66,7 +62,6 @@
     <button class="back-btn" id="backBtn" onclick="goHome()">← Выбрать другой язык</button>
 </header>
 
-<!-- ГЛАВНАЯ СТРАНИЦА: ВЫБОР ЯЗЫКА -->
 <div id="home-view">
     <div class="hero">
         <h1>Выбери язык программирования</h1>
@@ -74,7 +69,6 @@
     </div>
 
     <div class="lang-grid">
-        <!-- Карточка Python -->
         <div class="lang-card">
             <div>
                 <span class="lang-badge badge-py">Быстрый старт</span>
@@ -84,7 +78,6 @@
             <button class="btn-start btn-py" onclick="openCourse('python')">Учить Python →</button>
         </div>
 
-        <!-- Карточка C++ -->
         <div class="lang-card cpp-card">
             <div>
                 <span class="lang-badge badge-cpp">Высокая скорость</span>
@@ -96,7 +89,6 @@
     </div>
 </div>
 
-<!-- ЭКРАН ОБУЧЕНИЯ -->
 <div id="lesson-view">
     <div class="panel">
         <h2 id="lesson-title">Название урока</h2>
@@ -121,16 +113,14 @@
     const courses = {
         python: {
             title: "Python — Урок 1: Вывод данных и числа",
-            theory: `<p>В Python для вывода текста или результата вычислений используется функция <code>print()</code>.</p>
-                     <pre>print(10 + 5)  # Выведет 15</pre>`,
+            theory: "<p>В Python для вывода текста или результата вычислений используется функция <code>print()</code>.</p><pre>print(10 + 5)  # Выведет 15</pre>",
             task: "Напиши программу, которая вычислит и выведет сумму чисел <code>25</code> и <code>17</code>.",
             starterCode: "# Напиши свой код ниже:\nprint()",
             expected: "42"
         },
         cpp: {
             title: "C++ — Урок 1: Структура программы и вывод",
-            theory: `<p>Любая программа на C++ начинается с функции <code>main()</code>. Для вывода текста в консоль используется поток <code>std::cout</code> из библиотеки <code>&lt;iostream&gt;</code>.</p>
-                     <pre>#include &lt;iostream&gt;\n\nint main() {\n    std::cout &lt;&lt; "Привет, мир!";\n    return 0;\n}</pre>`,
+            theory: "<p>Любая программа на C++ начинается с функции <code>main()</code>. Для вывода текста в консоль используется поток <code>std::cout</code> из библиотеки <code>&lt;iostream&gt;</code>.</p><pre>#include &lt;iostream&gt;\n\nint main() {\n    std::cout &lt;&lt; \"Привет, мир!\";\n    return 0;\n}</pre>",
             task: "Напиши программу на C++, которая выведет в консоль фразу <code>Hello C++</code>.",
             starterCode: "#include <iostream>\n\nint main() {\n    // Напиши вывод ниже:\n    \n    return 0;\n}",
             expected: "Hello C++"
@@ -166,43 +156,42 @@
 
         if (currentLang === "python") {
             let outputText = "";
-            Sk.configure({ output: (text) => outputText += text });
-            Sk.misceval.asyncToPromise(() => Sk.importMainWithBody("<stdin>", false, userCode, true))
-                .then(() => {
-                    consoleEl.textContent = outputText || "(Пустой вывод)";
-                    if (outputText.trim() === expected) {
-                        setStatus(true, "✅ Отлично! Задание по Python выполнено верно.");
-                    } else {
-                        setStatus(false, "❌ Ожидался вывод: " + expected);
-                    }
-                })
-                .catch(err => {
-                    consoleEl.textContent = err.toString();
-                    setStatus(false, "⚠️ Ошибка в синтаксисе Python.");
-                });
+            Sk.configure({ output: function(text) { outputText += text; } });
+            Sk.misceval.asyncToPromise(function() {
+                return Sk.importMainWithBody("<stdin>", false, userCode, true);
+            }).then(function() {
+                consoleEl.textContent = outputText || "(Пустой вывод)";
+                if (outputText.trim() === expected) {
+                    setStatus(true, "✅ Отлично! Задание по Python выполнено верно.");
+                } else {
+                    setStatus(false, "❌ Ожидался вывод: " + expected);
+                }
+            }).catch(function(err) {
+                consoleEl.textContent = err.toString();
+                setStatus(false, "⚠️ Ошибка в синтаксисе Python.");
+            });
         } else if (currentLang === "cpp") {
-            // Проверка базовой структуры и вывода C++
-            const hasInclude = userCode.includes("#include <iostream>") || userCode.includes("#include<iostream>");
-            const hasMain = userCode.includes("main()");
+            const hasInclude = userCode.indexOf("#include <iostream>") !== -1 || userCode.indexOf("#include<iostream>") !== -1;
+            const hasMain = userCode.indexOf("main()") !== -1;
             const coutMatch = userCode.match(/(?:std::)?cout\s*<<\s*"([^"]*)"\s*;/);
 
             if (!hasInclude) {
-consoleEl.textContent = "Ошибка компиляции: не подключена библиотека ";
-setStatus(false, "⚠️ Добавь #include  в начало файла.");
-return;
-}
-if (!hasMain) {
-consoleEl.textContent = "Ошибка компиляции: не найдена точка входа int main()";
+                consoleEl.textContent = "Ошибка компиляции: не подключена библиотека <iostream>";
+                setStatus(false, "⚠️ Добавь #include <iostream> в начало файла.");
+                return;
+            }
+            if (!hasMain) {
+                consoleEl.textContent = "Ошибка компиляции: не найдена точка входа int main()";
 setStatus(false, "⚠️ Программа должна содержать функцию int main().");
 return;
 }
-if (coutMatch) {
-const printedText = coutMatch;
+if (coutMatch && coutMatch[1] !== undefined) {
+const printedText = coutMatch[1];
 consoleEl.textContent = printedText;
 if (printedText === expected) {
 setStatus(true, "✅ Скомпилировано без ошибок! Задание по C++ выполнено.");
 } else {
-setStatus(false, ❌ Выведено "${printedText}", а ожидалось "${expected}".);
+setStatus(false, "❌ Выведено "" + printedText + "", а ожидалось "" + expected + "".");
 }
 } else {
 consoleEl.textContent = "Ошибка компиляции: проверь синтаксис cout << "..." и точку с запятой (;) в конце.";
