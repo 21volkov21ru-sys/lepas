@@ -182,11 +182,11 @@
             }
             if (!hasMain) {
                 consoleEl.textContent = "Ошибка компиляции: не найдена точка входа int main()";
-setStatus(false, "⚠️ Программа должна содержать функцию int main().");
+ setStatus(false, "⚠️ Программа должна содержать функцию int main().");
 return;
 }
-if (coutMatch && coutMatch[1] !== undefined) {
-const printedText = coutMatch[1];
+if (coutMatch && coutMatch !== undefined) {
+const printedText = coutMatch;
 consoleEl.textContent = printedText;
 if (printedText === expected) {
 setStatus(true, "✅ Скомпилировано без ошибок! Задание по C++ выполнено.");
