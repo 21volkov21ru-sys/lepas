@@ -332,6 +332,14 @@ function ok() {
     renderTabs();
     document.getElementById("nextBtn").style.display = "inline-block";
 }
+    document.getElementById("btnPy").onclick = function() { openTopics("py"); };
+document.getElementById("btnCpp").onclick = function() { openTopics("cpp"); };
+document.getElementById("logoBtn").onclick = goHome;
+document.getElementById("backHome").onclick = goHome;
+document.getElementById("backTopics").onclick = function() { openTopics(curLang); };
+document.getElementById("runBtn").onclick = runCode;
+document.getElementById("nextBtn").onclick = nextTask;
+
 </script>
 
 </body>
