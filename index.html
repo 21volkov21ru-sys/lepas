@@ -3,51 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeHub — Тренажёр по темам (Python и C++)</title>
+    <title>CodeHub — Практикум по темам</title>
     <style>
-        body { font-family: system-ui, -apple-system, sans-serif; margin: 0; background: #0f172a; color: #f8fafc; }
+        body { font-family: sans-serif; margin: 0; background: #0f172a; color: #f8fafc; }
         header { background: #1e293b; padding: 16px 32px; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; }
         .logo { font-size: 20px; font-weight: bold; cursor: pointer; }
         .logo span { color: #38bdf8; }
         .nav-btns { display: flex; gap: 10px; }
-        .back-btn { background: #334155; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; display: none; font-size: 14px; }
-        .back-btn:hover { background: #475569; }
-
-        /* Экран 1: Выбор языка */
-        .hero { text-align: center; padding: 45px 20px 20px; }
+        .back-btn { background: #334155; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; display: none; }
+        .hero { text-align: center; padding: 40px 20px 20px; }
         .grid { display: flex; gap: 20px; max-width: 900px; margin: 20px auto; padding: 0 20px; flex-wrap: wrap; }
-        .card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; flex: 1; min-width: 260px; display: flex; flex-direction: column; justify-content: space-between; }
-        .card h2 { margin-top: 0; }
+        .card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; flex: 1; min-width: 260px; }
         .btn-start { border: none; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer; width: 100%; margin-top: 15px; color: #0f172a; }
         .btn-py { background: #38bdf8; }
         .btn-cpp { background: #818cf8; }
-
-        /* Экран 2: Выбор темы */
         #topics-view { display: none; max-width: 900px; margin: 30px auto; padding: 0 20px; }
-        .topic-list { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
-        .topic-card { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
-        .topic-info h3 { margin: 0 0 6px 0; color: #38bdf8; }
-        .topic-info p { margin: 0; color: #94a3b8; font-size: 14px; }
-        .topic-progress { font-size: 13px; font-weight: bold; color: #4ade80; margin-top: 6px; }
+        .topic-card { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 20px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
         .btn-topic { background: #38bdf8; color: #0f172a; border: none; padding: 10px 18px; border-radius: 6px; font-weight: bold; cursor: pointer; }
-
-        /* Экран 3: Тренажёр заданий */
         #lesson-view { display: none; max-width: 1100px; margin: 24px auto; padding: 0 20px; }
         .task-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
         .task-tab { background: #1e293b; color: #94a3b8; border: 1px solid #334155; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: bold; }
         .task-tab.active { border-color: #38bdf8; color: #fff; background: #0284c7; }
         .task-tab.solved { border-color: #10b981; color: #4ade80; }
-        .task-tab.active.solved { background: #059669; color: #fff; }
-
         .lesson-panels { display: flex; gap: 20px; flex-wrap: wrap; }
         .panel { background: #1e293b; padding: 24px; border-radius: 12px; flex: 1; min-width: 300px; border: 1px solid #334155; }
-        pre { background: #020617; padding: 12px; border-radius: 6px; overflow-x: auto; border: 1px solid #334155; color: #e2e8f0; }
-        textarea { width: 100%; height: 170px; font-family: monospace; font-size: 15px; padding: 12px; background: #020617; color: #38bdf8; border: 1px solid #334155; border-radius: 6px; box-sizing: border-box; resize: vertical; }
-        
-        .actions { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
-        .btn-run { background: #10b981; color: #0f172a; font-weight: bold; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-size: 15px; }
-        .btn-next { background: #38bdf8; color: #0f172a; font-weight: bold; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-size: 15px; display: none; }
-        
+        pre { background: #020617; padding: 12px; border-radius: 6px; border: 1px solid #334155; }
+        textarea { width: 100%; height: 170px; font-family: monospace; font-size: 15px; padding: 12px; background: #020617; color: #38bdf8; border: 1px solid #334155; border-radius: 6px; box-sizing: border-box; }
+        .btn-run { background: #10b981; color: #0f172a; font-weight: bold; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; margin-top: 12px; }
+        .btn-next { background: #38bdf8; color: #0f172a; font-weight: bold; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; margin-top: 12px; display: none; }
         #console { margin-top: 16px; padding: 12px; background: #000; color: #4ade80; font-family: monospace; border-radius: 6px; min-height: 40px; white-space: pre-wrap; }
         #status { margin-top: 12px; font-weight: bold; }
     </style>
@@ -57,559 +40,281 @@
 <header>
     <div class="logo" onclick="goHome()">&lt;/&gt; <span>CodeHub</span></div>
     <div class="nav-btns">
-        <button class="back-btn" id="backToTopicsBtn" onclick="openTopics(currentLang)">← К списку тем</button>
-        <button class="back-btn" id="backToHomeBtn" onclick="goHome()">← Выбрать язык</button>
+        <button class="back-btn" id="backTopics" onclick="openTopics(curLang)">← К списку тем</button>
+        <button class="back-btn" id="backHome" onclick="goHome()">← Выбрать язык</button>
     </div>
 </header>
 
-<!-- ЭКРАН 1: ВЫБОР ЯЗЫКА -->
 <div id="home-view">
     <div class="hero">
         <h1>Выбери язык программирования</h1>
-        <p>Каждый курс разбит на темы, а внутри каждой темы — по 6 практических задач.</p>
+        <p>Внутри каждого языка — темы, а в каждой теме по 6 практических задач.</p>
     </div>
-
     <div class="grid">
         <div class="card">
-            <div>
-                <h2>Python</h2>
-                <p>3 темы • 18 практических заданий (вывод print, переменные и математика, условия if).</p>
-            </div>
-            <button class="btn-start btn-py" onclick="openTopics('python')">Открыть темы Python →</button>
+            <h2>Python</h2>
+            <p>3 темы • 18 задач (print, переменные, условия if).</p>
+            <button class="btn-start btn-py" onclick="openTopics('py')">Открыть темы Python →</button>
         </div>
-
         <div class="card">
-            <div>
-                <h2>C++</h2>
-                <p>3 темы • 18 практических заданий (вывод cout, переменные int, условия и циклы).</p>
-            </div>
+            <h2>C++</h2>
+            <p>3 темы • 18 задач (cout, переменные int, условия и циклы).</p>
             <button class="btn-start btn-cpp" onclick="openTopics('cpp')">Открыть темы C++ →</button>
         </div>
     </div>
 </div>
 
-<!-- ЭКРАН 2: СПИСОК ТЕМ -->
 <div id="topics-view">
-    <h1 id="topics-header">Темы курса</h1>
-    <div class="topic-list" id="topic-list"></div>
+    <h1 id="topics-title">Темы курса</h1>
+    <div id="topic-list"></div>
 </div>
 
-<!-- ЭКРАН 3: РЕШЕНИЕ ЗАДАНИЙ ВНУТРИ ТЕМЫ -->
 <div id="lesson-view">
-    <h2 id="current-topic-title" style="margin-top:0; color:#94a3b8;">Тема</h2>
+    <h2 id="cur-topic-name" style="color:#94a3b8; margin-top:0;">Тема</h2>
     <div class="task-nav" id="task-nav"></div>
-
     <div class="lesson-panels">
         <div class="panel">
-            <h2 id="lesson-title">Задание</h2>
-            <div id="lesson-theory"></div>
-            <hr style="border-color: #334155; margin: 16px 0;">
-            <h3>Условие задачи</h3>
-            <p id="lesson-task"></p>
+            <h2 id="task-title">Задача</h2>
+            <div id="task-theory"></div>
+            <hr style="border-color:#334155;">
+            <h3>Условие</h3>
+            <p id="task-desc"></p>
         </div>
-
         <div class="panel">
             <h2>Редактор кода</h2>
             <textarea id="code"></textarea>
-            <div class="actions">
-                <button class="btn-run" onclick="runCode()">▶ Проверить решение</button>
-                <button class="btn-next" id="nextBtn" onclick="nextLesson()">Следующая задача →</button>
+            <div>
+                <button class="btn-run" onclick="runCode()">▶ Проверить</button>
+                <button class="btn-next" id="nextBtn" onclick="nextTask()">Следующая задача →</button>
             </div>
-            <div id="console">Вывод программы появится здесь...</div>
+            <div id="console">Вывод программы...</div>
             <div id="status"></div>
         </div>
     </div>
 </div>
 
 <script>
-var currentLang = "";
-var currentTopicIdx = 0;
-var currentTaskIdx = 0;
+var curLang = "";
+var curTopic = 0;
+var curTask = 0;
 
-var courseData = {
-    python: [
+var db = {
+    py: [
         {
-            topicTitle: "Тема 1. Команда print() и вывод данных",
-            topicDesc: "Учимся выводить числа, текст, примеры и несколько строк на экран.",
-            tasks: [
-                {
-                    title: "Задача 1: Вывод числа",
-                    theory: "<p>Команда <code>print()</code> выводит то, что написано внутри скобок.</p><pre>print(100)</pre>",
-                    task: "Выведи на экран число <code>2026</code>.",
-                    starter: "print()",
-                    expected: "2026"
-                },
-                {
-                    title: "Задача 2: Простое сложение",
-                    theory: "<p>Внутри <code>print()</code> можно считать математические выражения.</p><pre>print(10 + 5)  # Выведет 15</pre>",
-                    task: "Вычисли и выведи сумму чисел <code>34</code> и <code>66</code>.",
-                    starter: "print()",
-                    expected: "100"
-                },
-                {
-                    title: "Задача 3: Вывод текста",
-                    theory: "<p>Текст (строки) всегда пишется в кавычках — двойных или одинарных.</p><pre>print(\"Привет!\")</pre>",
-                    task: "Выведи слово <code>Python</code> (с большой буквы).",
-                    starter: "print()",
-                    expected: "Python"
-                },
-                {
-                    title: "Задача 4: Умножение и вычитание",
-                    theory: "<p>Для умножения используется знак <code>*</code>, для вычитания <code>-</code>.</p><pre>print(5 * 4 - 2)  # Выведет 18</pre>",
-                    task: "Выведи результат выражения: <code>15 * 4 - 10</code>.",
-                    starter: "print()",
-                    expected: "50"
-                },
-                {
-                    title: "Задача 5: Несколько строк вывода",
-                    theory: "<p>Каждый новый вызов <code>print()</code> печатает результат с новой строки.</p><pre>print(1)\nprint(2)</pre>",
-                    task: "Выведи на первой строке число <code>10</code>, а на второй — число <code>20</code>.",
-                    starter: "print()\nprint()",
-                    expected: "10\n20"
-                },
-                {
-                    title: "Задача 6: Склейка строк",
-                    theory: "<p>Знак <code>+</code> между строками склеивает их в одно слово.</p><pre>print(\"Code\" + \"Hub\")</pre>",
-                    task: "Склей и выведи фразу <code>Я программист</code> из строк <code>\"Я \"</code> и <code>\"программист\"</code>.",
-                    starter: "print()",
-                    expected: "Я программист"
-                }
+            name: "Тема 1. Команда print() и вывод данных",
+            desc: "Вывод чисел, текста, примеров и склейка строк (6 задач).",
+            list: [
+                { t: "Задача 1: Вывод числа", th: "<pre>print(100)</pre>", d: "Выведи число 2026.", s: "print()", ans: "2026" },
+                { t: "Задача 2: Сложение в print", th: "<pre>print(10 + 5)</pre>", d: "Выведи сумму 34 и 66.", s: "print()", ans: "100" },
+                { t: "Задача 3: Вывод текста", th: "<pre>print(\"Привет\")</pre>", d: "Выведи слово Python в кавычках.", s: "print()", ans: "Python" },
+                { t: "Задача 4: Умножение", th: "<pre>print(5 * 4 - 2)</pre>", d: "Выведи результат 15 * 4 - 10.", s: "print()", ans: "50" },
+                { t: "Задача 5: Две строки", th: "<pre>print(1)\nprint(2)</pre>", d: "Выведи 10 на первой строке и 20 на второй.", s: "print()\nprint()", ans: "10\n20" },
+                { t: "Задача 6: Склейка строк", th: "<pre>print(\"Code\" + \"Hub\")</pre>", d: "Склей \"Py\" и \"thon\" с помощью +.", s: "print()", ans: "Python" }
             ]
         },
         {
-            topicTitle: "Тема 2. Переменные и математика",
-            topicDesc: "Создание переменных, изменение значений, деление и степени.",
-            tasks: [
-                {
-                    title: "Задача 1: Создание переменной",
-                    theory: "<p>Переменная — это имя, в котором хранится число или текст: <code>a = 5</code>.</p><pre>x = 12\nprint(x)</pre>",
-                    task: "Создай переменную <code>a = 77</code> и выведи её на экран.",
-                    starter: "a = 77\n",
-                    expected: "77"
-},
-{
-title: "Задача 2: Сумма двух переменных",
-theory: "Переменные можно складывать друг с другом.x = 4\ny = 6\nprint(x + y)",
-task: "Даны переменные x = 18 и y = 24. Выведи их сумму.",
-starter: "x = 18\ny = 24\n",
-expected: "42"
-},
-{
-title: "Задача 3: Периметр прямоугольника",
-theory: "Периметр прямоугольника вычисляется по формуле (a + b) * 2.",
-task: "Даны стороны a = 5 и b = 8. Вычисли и выведи периметр.",
-starter: "a = 5\nb = 8\n",
-expected: "26"
-},
-{
-title: "Задача 4: Возведение в степень",
-theory: "Двойная звёздочка ** возводит число в степень.print(3 ** 2)  # Выведет 9",
-task: "Дано n = 2. Выведи n в 8-й степени.",
-starter: "n = 2\n",
-expected: "256"
-},
-{
-title: "Задача 5: Остаток от деления",
-theory: "Оператор % возвращает остаток от деления чисел.print(10 % 3)  # Выведет 1",
-task: "Найди остаток от деления числа 47 на 5 и выведи его.",
-starter: "print()",
-expected: "2"
-},
-{
-title: "Задача 6: Перезапись переменной",
-theory: "Значение переменной можно обновить на основе старого: score = score + 10.",
-task: "Дано hp = 50. Увеличь hp на 35 и выведи итоговое значение.",
-starter: "hp = 50\n\nprint(hp)",
-expected: "85"
-}
+            name: "Тема 2. Переменные и математика",
+            desc: "Создание переменных, сложение, степени и остаток (6 задач).",
+            list: [
+                { t: "Задача 1: Переменная", th: "<pre>x = 12\nprint(x)</pre>", d: "Создай a = 77 и выведи a.", s: "a = 77\n", ans: "77" },
+                { t: "Задача 2: Сумма переменных", th: "<pre>print(x + y)</pre>", d: "Даны x = 18 и y = 24. Выведи x + y.", s: "x = 18\ny = 24\n", ans: "42" },
+                { t: "Задача 3: Периметр", th: "<pre>print((a + b) * 2)</pre>", d: "Даны a = 5 и b = 8. Выведи периметр.", s: "a = 5\nb = 8\n", ans: "26" },
+                { t: "Задача 4: Степень **", th: "<pre>print(2 ** 3)</pre>", d: "Выведи 2 в 8-й степени (2 ** 8).", s: "print()", ans: "256" },
+                { t: "Задача 5: Остаток %", th: "<pre>print(10 % 3)</pre>", d: "Выведи остаток 47 % 5.", s: "print()", ans: "2" },
+                { t: "Задача 6: Изменение переменной", th: "<pre>hp = hp + 10</pre>", d: "Дано hp = 50. Прибавь 35 и выведи hp.", s: "hp = 50\n\nprint(hp)", ans: "85" }
+            ]
+        },
+        {
+            name: "Тема 3. Условный оператор if",
+            desc: "Сравнение чисел и проверка условий (6 задач).",
+            list: [
+                { t: "Задача 1: Больше или равно", th: "<pre>if x > 5: print(\"Да\")</pre>", d: "Если age >= 14, выведи \"OK\".", s: "age = 16\nif age >= 14: print()", ans: "OK" },
+                { t: "Задача 2: Равенство ==", th: "<pre>if pin == 1234: print(\"Да\")</pre>", d: "Если pin == 1234, выведи \"Open\".", s: "pin = 1234\nif pin == 1234: print()", ans: "Open" },
+                { t: "Задача 3: Чётность", th: "<pre>if n % 2 == 0: print(\"Да\")</pre>", d: "Если n % 2 == 0, выведи \"Even\".", s: "n = 24\nif n % 2 == 0: print()", ans: "Even" },
+                { t: "Задача 4: Сравнение a и b", th: "<pre>if a > b: print(a)</pre>", d: "Если a > b, выведи a.", s: "a = 45\nb = 30\n", ans: "45" },
+                { t: "Задача 5: Меньше нуля", th: "<pre>if t < 0: print(\"Cold\")</pre>", d: "Если t < 0, выведи \"Cold\".", s: "t = -5\n", ans: "Cold" },
+                { t: "Задача 6: Бонус", th: "<pre>if c >= 100: print(c + 50)</pre>", d: "Если c >= 100, выведи c + 50.", s: "c = 120\n", ans: "170" }
+            ]
+        }
+    ],
+    cpp: [
+        {
+            name: "Тема 1. Вывод данных std::cout",
+            desc: "Библиотека iostream и вывод строк и чисел (6 задач).",
+            list: [
+                { t: "Задача 1: Вывод текста", th: "<pre>std::cout &lt;&lt; \"Hi\";</pre>", d: "Выведи \"Hello C++\".", s: "#include <iostream>\nint main() {\n    \n    return 0;\n}", ans: "Hello C++", req: ["cout", "\"Hello C++\"", ";"] },
+                { t: "Задача 2: Вывод числа", th: "<pre>std::cout &lt;&lt; 2026;</pre>", d: "Выведи число 2026.", s: "#include <iostream>\nint main() {\n    \n    return 0;\n}", ans: "2026", req: ["cout", "2026", ";"] },
+                { t: "Задача 3: Сложение", th: "<pre>std::cout &lt;&lt; 40 + 60;</pre>", d: "Выведи сумму 40 + 60.", s: "#include <iostream>\nint main() {\n    \n    return 0;\n}", ans: "100", req: ["cout", "40", "60", ";"] },
+{ t: "Задача 4: Цепочка <<", th: "std::cout << "A" << "B";", d: "Выведи "C++" и "Top" через <<.", s: "#include \nint main() {\n    \n    return 0;\n}", ans: "C++Top", req: ["cout", ""C++"", ""Top"", ";"] },
+{ t: "Задача 5: Перенос endl", th: "std::cout << 5 << std::endl;", d: "Выведи 5 и std::endl.", s: "#include \nint main() {\n    \n    return 0;\n}", ans: "5", req: ["cout", "5", "endl", ";"] },
+{ t: "Задача 6: namespace std", th: "using namespace std;\ncout << "Ready";", d: "Добавь using namespace std; и выведи "Ready".", s: "#include \n\nint main() {\n    \n    return 0;\n}", ans: "Ready", req: ["using namespace std;", "cout", ""Ready"", ";"] }
 ]
 },
 {
-topicTitle: "Тема 3. Условный оператор if",
-topicDesc: "Проверка условий, сравнение чисел и ветвление программ.",
-tasks: [
-{
-title: "Задача 1: Проверка больше/меньше",
-theory: "Оператор if выполняет команду, если условие истинно.x = 10\nif x > 5: print("Да")",
-task: "Дано age = 16. Если age >= 14, выведи слово Паспорт.",
-starter: "age = 16\nif age >= 14: print()",
-expected: "Паспорт"
-},
-{
-title: "Задача 2: Проверка равенства",
-theory: "Для проверки равенства двух значений пишется двойное равно ==.",
-task: "Дано pin = 1234. Если pin == 1234, выведи Открыто.",
-starter: "pin = 1234\nif pin == 1234: print()",
-expected: "Открыто"
-},
-{
-title: "Задача 3: Чётное число",
-theory: "Число чётное, если остаток от деления на 2 равен нулю: n % 2 == 0.",
-task: "Дано n = 24. Проверь, что число чётное, и выведи Четное.",
-starter: "n = 24\nif n % 2 == 0: print()",
-expected: "Четное"
-},
-{
-title: "Задача 4: Сравнение двух переменных",
-theory: "В условии можно сравнивать две переменные между собой: if a > b:.",
-task: "Даны a = 45 и b = 30. Если a > b, выведи значение переменной a.",
-starter: "a = 45\nb = 30\n",
-expected: "45"
-},
-{
-title: "Задача 5: Отрицательная температура",
-theory: "Отрицательные числа проверяются условием t < 0.",
-task: "Дано t = -5. Если температура меньше нуля, выведи Мороз.",
-starter: "t = -5\n",
-expected: "Мороз"
-},
-{
-title: "Задача 6: Бонус за очки",
-theory: "Внутри if можно менять переменные и затем выводить результат.",
-task: "Дано coins = 120. Если coins >= 100, выведи coins + 50.",
-starter: "coins = 120\n",
-expected: "170"
-}
-]
-}
-],
-cpp: [
-{
-topicTitle: "Тема 1. Вывод данных (std::cout)",
-topicDesc: "Структура программы C++, библиотека iostream и оператор cout.",
-tasks: [
-{
-title: "Задача 1: Первая фраза",
-theory: "Для вывода текста в C++ используется поток std::cout.std::cout << "Hi";",
-task: "Выведи на экран фразу Hello C++.",
-starter: "#include \nint main() {\n    \n    return 0;\n}",
-expected: "Hello C++",
-mustContain: ["cout", ""Hello C++"", ";"]
-},
-{
-title: "Задача 2: Вывод числа",
-theory: "Числа выводятся без кавычек: std::cout << 2026;.",
-task: "Выведи в консоль число 2026.",
-starter: "#include \nint main() {\n    \n    return 0;\n}",
-expected: "2026",
-mustContain: ["cout", "2026", ";"]
-},
-{
-title: "Задача 3: Арифметика в cout",
-theory: "В cout можно сразу вывести результат сложения: std::cout << 10 + 5;.",
-task: "Выведи сумму чисел 40 и 60.",
-starter: "#include \nint main() {\n    \n    return 0;\n}",
-expected: "100",
-mustContain: ["cout", "40", "60", ";"]
-},
-{
-title: "Задача 4: Цепочка вывода <<",
-theory: "Оператор << можно использовать несколько раз подряд в одной строке.std::cout << "A" << "B";",
-task: "Выведи C++ и Top в одной команде через двойной <<.",
-starter: "#include \nint main() {\n    \n    return 0;\n}",
-expected: "C++Top",
-mustContain: ["cout", ""C++"", ""Top"", ";"]
-},
-{
-title: "Задача 5: Перенос строки std::endl",
-theory: "std::endl переводит курсор на новую строку.std::cout << 1 << std::endl;",
-task: "Выведи число 5 с переносом строки std::endl.",
-starter: "#include \nint main() {\n    \n    return 0;\n}",
-expected: "5",
-mustContain: ["cout", "5", "endl", ";"]
-},
-{
-title: "Задача 6: Пространство имён std",
-theory: "Если написать using namespace std;, можно писать просто cout без std::.",
-task: "Добавь using namespace std; и выведи Ready через короткий cout.",
-starter: "#include \n\nint main() {\n    \n    return 0;\n}",
-expected: "Ready",
-mustContain: ["using namespace std;", "cout", ""Ready"", ";"]
-}
+name: "Тема 2. Переменные int и ввод cin",
+desc: "Работа с целыми числами и чтение данных (6 задач).",
+list: [
+{ t: "Задача 1: Переменная int", th: "int level = 15;\nstd::cout << level;", d: "Объяви int level = 15; и выведи её.", s: "#include \nint main() {\n    \n    return 0;\n}", ans: "15", req: ["int", "level", "15", "cout", ";"] },
+{ t: "Задача 2: Сумма a + b", th: "std::cout << a + b;", d: "Выведи a + b.", s: "#include \nint main() {\n    int a = 12, b = 30;\n    \n    return 0;\n}", ans: "42", req: ["cout", "a + b", ";"] },
+{ t: "Задача 3: Умножение", th: "std::cout << w * h;", d: "Выведи w * h.", s: "#include \nint main() {\n    int w = 7, h = 9;\n    \n    return 0;\n}", ans: "63", req: ["cout", "w * h", ";"] },
+{ t: "Задача 4: Остаток %", th: "std::cout << 25 % 4;", d: "Выведи 25 % 4.", s: "#include \nint main() {\n    \n    return 0;\n}", ans: "1", req: ["cout", "25 % 4", ";"] },
+{ t: "Задача 5: Прибавление +=", th: "score += 25;\nstd::cout << score;", d: "Прибавь 25 к score и выведи.", s: "#include \nint main() {\n    int score = 50;\n    \n    return 0;\n}", ans: "75", req: ["score", "25", "cout", ";"] },
+{ t: "Задача 6: Ввод cin", th: "std::cin >> n;", d: "Считай число в n через std::cin >> n;.", s: "#include \nint main() {\n    int n;\n    \n    return 0;\n}", ans: "Ввод n готов", req: ["cin", ">>", "n", ";"] }
 ]
 },
 {
-topicTitle: "Тема 2. Переменные типа int и ввод cin",
-topicDesc: "Объявление целых чисел, вычисления с переменными и ввод с клавиатуры.",
-tasks: [
-{
-title: "Задача 1: Переменная int",
-theory: "Целые числа объявляются ключевым словом int: int x = 10;.",
-task: "Объяви переменную int level = 15; и выведи её через cout.",
-starter: "#include \nint main() {\n    \n    return 0;\n}",
-expected: "15",
-mustContain: ["int", "level", "15", "cout", ";"]
-},
-{
-title: "Задача 2: Сложение переменных",
-theory: "Переменные можно складывать: int c = a + b;.",
-task: "Даны a = 12 и b = 30. Выведи a + b.",
-starter: "#include \nint main() {\n    int a = 12;\n    int b = 30;\n    \n    return 0;\n}",
-expected: "42",
-mustContain: ["cout", "a + b", ";"]
-},
-{
-title: "Задача 3: Умножение чисел",
-theory: "Умножение в C++ обозначается звёздочкой *.",
-task: "Даны w = 7 и h = 9. Выведи их произведение w * h.",
-starter: "#include \nint main() {\n    int w = 7;\n    int h = 9;\n    \n    return 0;\n}",
-expected: "63",
-mustContain: ["cout", "w * h", ";"]
-},
-{
-title: "Задача 4: Остаток от деления %",
-theory: "Оператор % находит остаток от деления целых чисел.",
-task: "Выведи остаток от деления 25 % 4.",
-starter: "#include \nint main() {\n    \n    return 0;\n}",
-expected: "1",
-mustContain: ["cout", "25 % 4", ";"]
-},
-{
-title: "Задача 5: Увеличение переменной",
-theory: "Оператор += прибавляет число к переменной: x += 5;.",
-task: "Дано int score = 50;. Прибавь к нему 25 и выведи score.",
-starter: "#include \nint main() {\n    int score = 50;\n    \n    return 0;\n}",
-expected: "75",
-mustContain: ["score", "25", "cout", ";"]
-},
-{
-title: "Задача 6: Ввод числа std::cin",
-theory: "Поток std::cin >> n; считывает число с клавиатуры в переменную n.",
-task: "Считай значение в переменную n с помощью std::cin >> n;.",
-starter: "#include \nint main() {\n    int n;\n    \n    return 0;\n}",
-expected: "Ввод n готов",
-mustContain: ["cin", ">>", "n", ";"]
-}
-]
-},
-{
-topicTitle: "Тема 3. Условия if и циклы for",
-topicDesc: "Управление ходом программы: ветвления и повторения.",
-tasks: [
-{
-title: "Задача 1: Простое условие if",
-theory: "Условие в C++ берётся в круглые скобки: if (x > 0) { ... }.",
-task: "Напиши условие if (x > 5) и выведи внутри слово Yes.",
-starter: "#include \nint main() {\n    int x = 10;\n    \n    return 0;\n}",
-expected: "Yes",
-mustContain: ["if", "x > 5", "cout", ""Yes"", ";"]
-},
-{
-title: "Задача 2: Проверка равенства ==",
-theory: "Равенство проверяется двойным знаком равно: if (a == 100).",
-task: "Проверь if (code == 777) и выведи Win.",
-starter: "#include \nint main() {\n    int code = 777;\n    \n    return 0;\n}",
-expected: "Win",
-mustContain: ["if", "code == 777", "cout", ""Win"", ";"]
-},
-{
-title: "Задача 3: Ветка else",
-theory: "Блок else выполняется, если условие в if не сработало.",
-task: "Допиши ветку else, которая выводит No.",
-starter: "#include \nint main() {\n    int a = 2;\n    if (a > 5) { std::cout << "Yes"; }\n    \n    return 0;\n}",
-expected: "No",
-mustContain: ["else", "cout", ""No"", ";"]
-},
-{
-title: "Задача 4: Цикл for от 0 до 4",
-theory: "Цикл for повторяет блок кода заданное число раз.for (int i = 0; i < 5; i++) { ... }",
-task: "Напиши цикл for (int i = 0; i < 5; i++) и выведи внутри i.",
-starter: "#include \nint main() {\n    \n    return 0;\n}",
-expected: "01234",
-mustContain: ["for", "int i = 0", "i < 5", "i++", "cout"]
-},
-{
-title: "Задача 5: Цикл от 1 до 3",
-theory: "Счётчик цикла можно начинать с единицы: int i = 1; i <= 3; i++.",
-task: "Напиши цикл for (int i = 1; i <= 3; i++) и выведи i.",
-starter: "#include \nint main() {\n    \n    return 0;\n}",
-expected: "123",
-mustContain: ["for", "int i = 1", "i <= 3", "i++", "cout"]
-},
-{
-title: "Задача 6: Цикл while",
-theory: "Цикл while (n > 0) работает, пока условие истинно.",
-task: "Напиши заголовок цикла while (n > 0) и уменьшай n-- внутри.",
-starter: "#include \nint main() {\n    int n = 3;\n    \n    return 0;\n}",
-expected: "Цикл while выполнен",
-mustContain: ["while", "n > 0", "n--", ";"]
-}
+name: "Тема 3. Условия if и циклы for",
+desc: "Ветвления if/else и повторения for/while (6 задач).",
+list: [
+{ t: "Задача 1: Условие if", th: "if (x > 5) { std::cout << "Yes"; }", d: "Если x > 5, выведи "Yes".", s: "#include \nint main() {\n    int x = 10;\n    \n    return 0;\n}", ans: "Yes", req: ["if", "x > 5", "cout", ""Yes"", ";"] },
+{ t: "Задача 2: Равенство ==", th: "if (code == 777) { std::cout << "Win"; }", d: "Если code == 777, выведи "Win".", s: "#include \nint main() {\n    int code = 777;\n    \n    return 0;\n}", ans: "Win", req: ["if", "code == 777", "cout", ""Win"", ";"] },
+{ t: "Задача 3: Ветка else", th: "else { std::cout << "No"; }", d: "Допиши else с выводом "No".", s: "#include \nint main() {\n    int a = 2;\n    if (a > 5) { std::cout << "Yes"; }\n    \n    return 0;\n}", ans: "No", req: ["else", "cout", ""No"", ";"] },
+{ t: "Задача 4: Цикл for (0..4)", th: "for (int i = 0; i < 5; i++) { std::cout << i; }", d: "Напиши цикл for от 0 до 4 и выведи i.", s: "#include \nint main() {\n    \n    return 0;\n}", ans: "01234", req: ["for", "int i = 0", "i < 5", "i++", "cout"] },
+{ t: "Задача 5: Цикл for (1..3)", th: "for (int i = 1; i <= 3; i++) { std::cout << i; }", d: "Напиши цикл от 1 до 3 и выведи i.", s: "#include \nint main() {\n    \n    return 0;\n}", ans: "123", req: ["for", "int i = 1", "i <= 3", "i++", "cout"] },
+{ t: "Задача 6: Цикл while", th: "while (n > 0) { n--; }", d: "Напиши цикл while (n > 0) и внутри n--;.", s: "#include \nint main() {\n    int n = 3;\n    \n    return 0;\n}", ans: "Готово", req: ["while", "n > 0", "n--", ";"] }
 ]
 }
 ]
 };
-function hideAllViews() {
+function hideViews() {
 document.getElementById("home-view").style.display = "none";
 document.getElementById("topics-view").style.display = "none";
 document.getElementById("lesson-view").style.display = "none";
 }
 function goHome() {
-hideAllViews();
+hideViews();
 document.getElementById("home-view").style.display = "block";
-document.getElementById("backToTopicsBtn").style.display = "none";
-document.getElementById("backToHomeBtn").style.display = "none";
+document.getElementById("backTopics").style.display = "none";
+document.getElementById("backHome").style.display = "none";
 }
 function openTopics(lang) {
-currentLang = lang;
-hideAllViews();
+curLang = lang;
+hideViews();
 document.getElementById("topics-view").style.display = "block";
-document.getElementById("backToTopicsBtn").style.display = "none";
-document.getElementById("backToHomeBtn").style.display = "inline-block";
-var langName = (lang === "python") ? "Python" : "C++";
-document.getElementById("topics-header").textContent = "Темы курса " + langName;
-var listEl = document.getElementById("topic-list");
-listEl.innerHTML = "";
-var topics = courseData[lang];
+document.getElementById("backTopics").style.display = "none";
+document.getElementById("backHome").style.display = "inline-block";
+document.getElementById("topics-title").textContent = (lang === "py") ? "Темы Python" : "Темы C++";
+var box = document.getElementById("topic-list");
+box.innerHTML = "";
+var topics = db[lang];
 for (var i = 0; i < topics.length; i++) {
 var t = topics[i];
-var solvedCount = 0;
-for (var j = 0; j < t.tasks.length; j++) {
-if (localStorage.getItem("done_" + lang + "" + i + "" + j) === "1") {
-solvedCount++;
-}
+var done = 0;
+for (var j = 0; j < t.list.length; j++) {
+if (localStorage.getItem("ok_" + lang + "" + i + "" + j) === "1") done++;
 }
 var card = document.createElement("div");
 card.className = "topic-card";
-card.innerHTML = "" + t.topicTitle + "" + t.topicDesc + "Решено: " + solvedCount + " из " + t.tasks.length + "";
+card.innerHTML = "" + t.name + "" + t.desc + "Решено: " + done + " / " + t.list.length + "";
 var btn = document.createElement("button");
 btn.className = "btn-topic";
-btn.textContent = "Решать задания →";
-btn.setAttribute("data-tidx", i);
-btn.onclick = function() {
-openTopicTasks(Number(this.getAttribute("data-tidx")));
-};
+btn.textContent = "Решать →";
+btn.setAttribute("data-i", i);
+btn.onclick = function() { startTopic(Number(this.getAttribute("data-i"))); };
 card.appendChild(btn);
-listEl.appendChild(card);
+box.appendChild(card);
 }
 }
-function openTopicTasks(topicIdx) {
-currentTopicIdx = topicIdx;
-currentTaskIdx = 0;
-hideAllViews();
+function startTopic(tIdx) {
+curTopic = tIdx;
+curTask = 0;
+hideViews();
 document.getElementById("lesson-view").style.display = "block";
-document.getElementById("backToTopicsBtn").style.display = "inline-block";
-document.getElementById("backToHomeBtn").style.display = "inline-block";
-var topic = courseData[currentLang][topicIdx];
-document.getElementById("current-topic-title").textContent = topic.topicTitle;
+document.getElementById("backTopics").style.display = "inline-block";
+document.getElementById("backHome").style.display = "inline-block";
+document.getElementById("cur-topic-name").textContent = db[curLang][tIdx].name;
 loadTask(0);
 }
-function renderTaskTabs() {
+function renderTabs() {
 var nav = document.getElementById("task-nav");
 nav.innerHTML = "";
-var tasks = courseData[currentLang][currentTopicIdx].tasks;
-for (var i = 0; i < tasks.length; i++) {
-var btn = document.createElement("button");
-btn.className = "task-tab";
-if (i === currentTaskIdx) btn.classList.add("active");
-if (localStorage.getItem("done_" + currentLang + "" + currentTopicIdx + "" + i) === "1") {
-btn.classList.add("solved");
-}
-btn.textContent = "Задача " + (i + 1);
-btn.setAttribute("data-idx", i);
-btn.onclick = function() {
-loadTask(Number(this.getAttribute("data-idx")));
-};
-nav.appendChild(btn);
+var list = db[curLang][curTopic].list;
+for (var i = 0; i < list.length; i++) {
+var b = document.createElement("button");
+b.className = "task-tab";
+if (i === curTask) b.classList.add("active");
+if (localStorage.getItem("ok_" + curLang + "" + curTopic + "" + i) === "1") b.classList.add("solved");
+b.textContent = "Задача " + (i + 1);
+b.setAttribute("data-k", i);
+b.onclick = function() { loadTask(Number(this.getAttribute("data-k"))); };
+nav.appendChild(b);
 }
 }
-function loadTask(taskIdx) {
-currentTaskIdx = taskIdx;
-var item = courseData[currentLang][currentTopicIdx].tasks[taskIdx];
-document.getElementById("lesson-title").textContent = item.title;
-document.getElementById("lesson-theory").innerHTML = item.theory;
-document.getElementById("lesson-task").innerHTML = item.task;
-document.getElementById("code").value = item.starter;
-document.getElementById("console").textContent = "Вывод программы появится здесь...";
+function loadTask(idx) {
+curTask = idx;
+var item = db[curLang][curTopic].list[idx];
+document.getElementById("task-title").textContent = item.t;
+document.getElementById("task-theory").innerHTML = item.th;
+document.getElementById("task-desc").textContent = item.d;
+document.getElementById("code").value = item.s;
+document.getElementById("console").textContent = "Вывод программы...";
 document.getElementById("status").textContent = "";
 document.getElementById("nextBtn").style.display = "none";
-renderTaskTabs();
+renderTabs();
 }
-function nextLesson() {
-var total = courseData[currentLang][currentTopicIdx].tasks.length;
-if (currentTaskIdx + 1 < total) {
-loadTask(currentTaskIdx + 1);
-} else {
-openTopics(currentLang);
-}
+function nextTask() {
+var total = db[curLang][curTopic].list.length;
+if (curTask + 1 < total) loadTask(curTask + 1);
+else openTopics(curLang);
 }
 function runCode() {
-var userCode = document.getElementById("code").value;
-var consoleEl = document.getElementById("console");
-var statusEl = document.getElementById("status");
-var item = courseData[currentLang][currentTopicIdx].tasks[currentTaskIdx];
-if (currentLang === "python") {
+var code = document.getElementById("code").value;
+var out = document.getElementById("console");
+var st = document.getElementById("status");
+var item = db[curLang][curTopic].list[curTask];
+if (curLang === "py") {
 try {
-var lines = userCode.split("\n");
-var outputs = [];
-var jsCode = "";
+var lines = code.split("\n");
+var resArr = [];
+var js = "";
 for (var i = 0; i < lines.length; i++) {
-var line = lines[i].trim();
-if (!line || line.charAt(0) === "#") continue;
-if (line.indexOf("if ") === 0 && line.indexOf(":") !== -1) {
-var colonPos = line.indexOf(":");
-var cond = line.substring(3, colonPos).trim();
-var body = line.substring(colonPos + 1).trim();
-if (body.indexOf("print(") === 0 && body.charAt(body.length - 1) === ")") {
-var innerIf = body.substring(6, body.length - 1);
-jsCode += "if (" + cond + ") { __out.push(String(" + innerIf + ")); }\n";
+var ln = lines[i].trim();
+if (!ln || ln.charAt(0) === "#") continue;
+if (ln.indexOf("if ") === 0 && ln.indexOf(":") !== -1) {
+var cp = ln.indexOf(":");
+var cond = ln.substring(3, cp).trim();
+var bd = ln.substring(cp + 1).trim();
+if (bd.indexOf("print(") === 0 && bd.charAt(bd.length - 1) === ")") {
+js += "if (" + cond + ") { __o.push(String(" + bd.substring(6, bd.length - 1) + ")); }\n";
 }
-} else if (line.indexOf("print(") === 0 && line.charAt(line.length - 1) === ")") {
-var inner = line.substring(6, line.length - 1);
-jsCode += "__out.push(String(" + inner + "));\n";
+} else if (ln.indexOf("print(") === 0 && ln.charAt(ln.length - 1) === ")") {
+js += "__o.push(String(" + ln.substring(6, ln.length - 1) + "));\n";
 } else {
-jsCode += "var " + line + ";\n";
+js += "var " + ln + ";\n";
 }
 }
-var fn = new Function("__out", jsCode);
-fn(outputs);
-var res = outputs.join("\n");
-consoleEl.textContent = res || "(Пусто)";
-if (res.trim() === item.expected) {
-markSuccess();
-} else {
-statusEl.style.color = "#f87171";
-statusEl.textContent = "❌ Ожидался вывод:\n" + item.expected;
-}
+var fn = new Function("__o", js);
+fn(resArr);
+var res = resArr.join("\n");
+out.textContent = res || "(Пусто)";
+if (res.trim() === item.ans) ok();
+else { st.style.color = "#f87171"; st.textContent = "❌ Ожидалось: " + item.ans; }
 } catch (e) {
-consoleEl.textContent = "Ошибка: " + e.message;
-statusEl.style.color = "#f87171";
-statusEl.textContent = "⚠️ Проверь скобки, кавычки и названия переменных.";
+out.textContent = "Ошибка: " + e.message;
+st.style.color = "#f87171";
+st.textContent = "⚠️ Ошибка синтаксиса.";
 }
 } else {
-var hasInc = userCode.indexOf("#include") !== -1 && userCode.indexOf("iostream") !== -1;
-if (!hasInc) {
-consoleEl.textContent = "Ошибка: не найдена библиотека #include ";
-statusEl.style.color = "#f87171";
-statusEl.textContent = "⚠️ Подключи iostream в начале программы.";
+if (code.indexOf("#include") === -1 || code.indexOf("iostream") === -1) {
+out.textContent = "Нет #include ";
+st.style.color = "#f87171";
+st.textContent = "⚠️ Подключи iostream.";
 return;
 }
-var cleanCode = userCode.replace(/\s+/g, " ");
-var allOk = true;
-for (var j = 0; j < item.mustContain.length; j++) {
-var token = item.mustContain[j];
-if (cleanCode.indexOf(token) === -1 && userCode.indexOf(token) === -1) {
-allOk = false;
-break;
+var clean = code.replace(/\s+/g, " ");
+var pass = true;
+for (var j = 0; j < item.req.length; j++) {
+if (clean.indexOf(item.req[j]) === -1 && code.indexOf(item.req[j]) === -1) { pass = false; break; }
+}
+if (pass) { out.textContent = item.ans; ok(); }
+else { out.textContent = "Ошибка компиляции"; st.style.color = "#f87171"; st.textContent = "❌ Проверь синтаксис и точку с запятой."; }
 }
 }
-if (allOk) {
-consoleEl.textContent = item.expected;
-markSuccess();
-} else {
-consoleEl.textContent = "Ошибка компиляции или неверный вывод";
-statusEl.style.color = "#f87171";
-statusEl.textContent = "❌ Проверь синтаксис, кавычки и точку с запятой (;).";
-}
-}
-}
-function markSuccess() {
-var statusEl = document.getElementById("status");
-statusEl.style.color = "#4ade80";
-statusEl.textContent = "✅ Отлично! Задача решена верно.";
-localStorage.setItem("done_" + currentLang + "" + currentTopicIdx + "" + currentTaskIdx, "1");
-renderTaskTabs();
-var nextBtn = document.getElementById("nextBtn");
-var total = courseData[currentLang][currentTopicIdx].tasks.length;
-nextBtn.textContent = (currentTaskIdx + 1 < total) ? "Следующая задача →" : "К списку тем 🎉";
-nextBtn.style.display = "inline-block";
+function ok() {
+var st = document.getElementById("status");
+st.style.color = "#4ade80";
+st.textContent = "✅ Верно!";
+localStorage.setItem("ok_" + curLang + "" + curTopic + "" + curTask, "1");
+renderTabs();
+document.getElementById("nextBtn").style.display = "inline-block";
 }
