@@ -225,207 +225,114 @@ document.getElementById("cur-topic-name").textContent = topics.at(tIdx).name;
 loadTask(0);
 }
 function renderTabs() {
-var nav = document.getElementById("task-nav");
-nav.innerHTML = "";
-var topics = (curLang === "py") ? db.py : db.cpp;
-var list = topics.at(curTopic).list;
-list.forEach(function(, i) {
-var b = document.createElement("button");
-b.className = "task-tab";
-if (i === curTask) b.classList.add("active");
-if (localStorage.getItem("ok" + curLang + "" + curTopic + "" + i) === "1") b.classList.add("solved");
-b.textContent = "Задача " + (i + 1);
-b.onclick = function() { loadTask(i); };
-nav.appendChild(b);
-});
+    var nav = document.getElementById("task-nav");
+    nav.innerHTML = "";
+    var topics = (curLang === "py") ? db.py : db.cpp;
+    var list = topics.at(curTopic).list;
+    list.forEach(function(item, i) {
+        var b = document.createElement("button");
+        b.className = "task-tab";
+        if (i === curTask) b.classList.add("active");
+        if (localStorage.getItem("ok-" + curLang + "-" + curTopic + "-" + i) === "1") b.classList.add("solved");
+        b.textContent = "Задача " + (i + 1);
+        b.onclick = function() { loadTask(i); };
+        nav.appendChild(b);
+    });
 }
+
 function loadTask(idx) {
-curTask = idx;
-var topics = (curLang === "py") ? db.py : db.cpp;
-var item = topics.at(curTopic).list.at(idx);
-document.getElementById("task-title").textContent = item.t;
-document.getElementById("task-theory").innerHTML = item.th;
-document.getElementById("task-desc").textContent = item.d;
-document.getElementById("code").value = item.s;
-document.getElementById("console").textContent = "Вывод программы...";
-document.getElementById("status").textContent = "";
-document.getElementById("nextBtn").style.display = "none";
-renderTabs();
+    curTask = idx;
+    var topics = (curLang === "py") ? db.py : db.cpp;
+    var item = topics.at(curTopic).list.at(idx);
+    document.getElementById("task-title").textContent = item.t;
+    document.getElementById("task-theory").innerHTML = item.th;
+    document.getElementById("task-desc").textContent = item.d;
+    document.getElementById("code").value = item.s;
+    document.getElementById("console").textContent = "Вывод программы...";
+    document.getElementById("status").textContent = "";
+    document.getElementById("nextBtn").style.display = "none";
+    renderTabs();
 }
+
 function nextTask() {
-var topics = (curLang === "py") ? db.py : db.cpp;
-var total = topics.at(curTopic).list.length;
-if (curTask + 1 < total) loadTask(curTask + 1);
-else openTopics(curLang);
+    var topics = (curLang === "py") ? db.py : db.cpp;
+    var total = topics.at(curTopic).list.length;
+    if (curTask + 1 < total) loadTask(curTask + 1);
+    else openTopics(curLang);
 }
+
 function runCode() {
-var code = document.getElementById("code").value;
-var out = document.getElementById("console");
-var st = document.getElementById("status");
-var topics = (curLang === "py") ? db.py : db.cpp;
-var item = topics.at(curTopic).list.at(curTask);
-if (curLang === "py") {
-try {
-var lines = code.split(NL);
-var resArr = [];
-var js = "";
-var declared = {};
-lines.forEach(function(raw) {
-var ln = raw.trim();
-if (!ln || ln.charAt(0) === "#") return;
-if (ln.indexOf("if ") === 0 && ln.indexOf(":") !== -1) {
-var cp = ln.indexOf(":");
-var cond = ln.substring(3, cp).trim();
-var bd = ln.substring(cp + 1).trim();
-if (bd.indexOf("print(") === 0 && bd.charAt(bd.length - 1) === ")") {
-js += "if (" + cond + ") { __o.push(String(" + bd.substring(6, bd.length - 1) + ")); }" + NL;
+    var code = document.getElementById("code").value;
+    var out = document.getElementById("console");
+    var st = document.getElementById("status");
+    var topics = (curLang === "py") ? db.py : db.cpp;
+    var item = topics.at(curTopic).list.at(curTask);
+
+    if (curLang === "py") {
+        try {
+            var lines = code.split(NL);
+            var resArr = [];
+            var js = "";
+            var declared = {};
+            lines.forEach(function(raw) {
+                var ln = raw.trim();
+                if (!ln || ln.charAt(0) === "#") return;
+                if (ln.indexOf("if ") === 0 && ln.indexOf(":") !== -1) {
+                    var cp = ln.indexOf(":");
+                    var cond = ln.substring(3, cp).trim();
+                    var bd = ln.substring(cp + 1).trim();
+                    if (bd.indexOf("print(") === 0 && bd.charAt(bd.length - 1) === ")") {
+                        js += "if (" + cond + ") { outArr.push(String(" + bd.substring(6, bd.length - 1) + ")); }" + NL;
+                    }
+                } else if (ln.indexOf("print(") === 0 && ln.charAt(ln.length - 1) === ")") {
+                    js += "outArr.push(String(" + ln.substring(6, ln.length - 1) + "));" + NL;
+                } else if (ln.indexOf("=") !== -1) {
+                    var vName = ln.split("=").at(0).trim();
+                    if (!declared[vName]) {
+                        declared[vName] = true;
+                        js += "var " + ln + ";" + NL;
+                    } else {
+                        js += ln + ";" + NL;
+                    }
+                }
+            });
+            var fn = new Function("outArr", js);
+            fn(resArr);
+            var res = resArr.join(NL);
+            out.textContent = res || "(Пусто)";
+            if (res.trim() === item.ans) ok();
+            else { st.style.color = "#f87171"; st.textContent = "❌ Ожидалось: " + item.ans; }
+        } catch (e) {
+            out.textContent = "Ошибка: " + e.message;
+            st.style.color = "#f87171";
+            st.textContent = "⚠️ Ошибка синтаксиса.";
+        }
+    } else {
+        if (code.indexOf("#include") === -1 || code.indexOf("iostream") === -1) {
+            out.textContent = "Нет #include <iostream>";
+            st.style.color = "#f87171";
+            st.textContent = "⚠️ Подключи iostream.";
+            return;
+        }
+        var clean = code.replace(/\s+/g, " ");
+        var pass = true;
+        item.req.forEach(function(token) {
+            if (clean.indexOf(token) === -1 && code.indexOf(token) === -1) pass = false;
+        });
+        if (pass) { out.textContent = item.ans; ok(); }
+        else { out.textContent = "Ошибка компиляции"; st.style.color = "#f87171"; st.textContent = "❌ Проверь синтаксис и точку с запятой."; }
+    }
 }
-} else if (ln.indexOf("print(") === 0 && ln.charAt(ln.length - 1) === ")") {
-js += "__o.push(String(" + ln.substring(6, ln.length - 1) + "));" + NL;
-} else if (ln.indexOf("=") !== -1) {
-var vName = ln.split("=").at(0).trim();
-if (!declared[vName]) {
-declared[vName] = true;
-js += "var " + ln + ";" + NL;
-} else {
-js += ln + ";" + NL;
-}
-}
-});
-var fn = new Function("__o", js);
-fn(resArr);
-var res = resArr.join(NL);
-out.textContent = res || "(Пусто)";
-if (res.trim() === item.ans) ok();
-else { st.style.color = "#f87171"; st.textContent = "❌ Ожидалось: " + item.ans; }
-} catch (e) {
-out.textContent = "Ошибка: " + e.message;
-st.style.color = "#f87171";
-st.textContent = "⚠️ Ошибка синтаксиса.";
-}
-} else {
-if (code.indexOf("#include") === -1 || code.indexOf("iostream") === -1) {
-out.textContent = "Нет #include ";
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<title>CodeHub</title>
-<style>
-body { font-family: sans-serif; background: #0f172a; color: #fff; margin: 0; padding: 20px; }
-.box { max-width: 800px; margin: auto; }
-.card { background: #1e293b; padding: 20px; border-radius: 10px; margin-bottom: 15px; }
-button { background: #38bdf8; color: #000; border: none; padding: 10px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; margin: 4px; }
-textarea { width: 100%; height: 120px; background: #000; color: #38bdf8; font-family: monospace; font-size: 15px; padding: 10px; box-sizing: border-box; }
-#out { background: #000; color: #4ade80; padding: 10px; font-family: monospace; margin-top: 10px; }
-.hide { display: none; }
-</style>
-</head>
-<body>
-<div class="box">
-  <div id="v1">
-    <h1>Выбери язык</h1>
-    <div class="card"><h2>Python</h2><button onclick="openT('py')">Темы Python</button></div>
-    <div class="card"><h2>C++</h2><button onclick="openT('cpp')">Темы C++</button></div>
-  </div>
-  <div id="v2" class="hide">
-    <button onclick="show('v1')">← Назад</button>
-    <h1 id="tTitle"></h1>
-    <div id="tList"></div>
-  </div>
-  <div id="v3" class="hide">
-    <button onclick="show('v2')">← К темам</button>
-    <div id="tabs"></div>
-    <h2 id="qName"></h2>
-    <p id="qText"></p>
-    <textarea id="code"></textarea>
-    <button onclick="check()" style="background:#10b981;">Проверить</button>
-    <div id="out">Вывод...</div>
-    <p id="st"></p>
-  </div>
-</div>
-<script>
-var L = 'py', T = 0, Q = 0;
-var DATA = {
-  py: [
-    { name: 'Тема 1: print()', qs: [
-      { n: 'Задача 1', d: 'Выведи число 2026', s: 'print()', a: '2026' },
-      { n: 'Задача 2', d: 'Выведи сумму 34 + 66', s: 'print()', a: '100' },
-      { n: 'Задача 3', d: 'Выведи слово Python в кавычках', s: 'print()', a: 'Python' },
-      { n: 'Задача 4', d: 'Выведи 15 * 4 - 10', s: 'print()', a: '50' },
-      { n: 'Задача 5', d: 'Выведи 2 ** 8', s: 'print()', a: '256' },
-      { n: 'Задача 6', d: 'Склей "Py" + "thon"', s: 'print()', a: 'Python' }
-    ]},
-    { name: 'Тема 2: Переменные', qs: [
-      { n: 'Задача 1', d: 'Создай a = 77 и выведи a', s: 'a = 77\nprint()', a: '77' },
-      { n: 'Задача 2', d: 'Выведи x + y (x=18, y=24)', s: 'x = 18\ny = 24\nprint()', a: '42' },
-      { n: 'Задача 3', d: 'Выведи (a + b) * 2 (a=5, b=8)', s: 'a = 5\nb = 8\nprint()', a: '26' },
-      { n: 'Задача 4', d: 'Выведи остаток 47 % 5', s: 'print()', a: '2' },
-      { n: 'Задача 5', d: 'Увеличь hp = 50 на 35 и выведи', s: 'hp = 50\nhp = hp + 35\nprint()', a: '85' },
-      { n: 'Задача 6', d: 'Выведи 100 // 3', s: 'print()', a: '33' }
-    ]}
-  ],
-  cpp: [
-    { name: 'Тема 1: std::cout', qs: [
-      { n: 'Задача 1', d: 'Выведи "Hello C++"', s: '#include <iostream>\nint main() {\n  std::cout << "";\n  return 0;\n}', a: 'Hello C++', r: '"Hello C++"' },
-      { n: 'Задача 2', d: 'Выведи число 2026', s: '#include <iostream>\nint main() {\n  std::cout << ;\n  return 0;\n}', a: '2026', r: '2026' },
-      { n: 'Задача 3', d: 'Выведи 40 + 60', s: '#include <iostream>\nint main() {\n  std::cout << ;\n  return 0;\n}', a: '100', r: '40 + 60' },
-      { n: 'Задача 4', d: 'Добавь std::endl после 5', s: '#include <iostream>\nint main() {\n  std::cout << 5 << ;\n  return 0;\n}', a: '5', r: 'endl' },
-      { n: 'Задача 5', d: 'Напиши using namespace std;', s: '#include <iostream>\n\nint main() {\n  cout << "OK";\n  return 0;\n}', a: 'OK', r: 'using namespace std;' },
-      { n: 'Задача 6', d: 'Выведи "Top"', s: '#include <iostream>\nint main() {\n  std::cout << "";\n  return 0;\n}', a: 'Top', r: '"Top"' }
-    ]}
-  ]
-};
-function show(id) {
-  document.getElementById('v1').className = 'hide';
-  document.getElementById('v2').className = 'hide';
-  document.getElementById('v3').className = 'hide';
-  document.getElementById(id).className = '';
-}
-function openT(lang) {
-  L = lang; show('v2');
-  document.getElementById('tTitle').textContent = lang === 'py' ? 'Темы Python' : 'Темы C++';
-  var box = document.getElementById('tList'); box.innerHTML = '';
-  DATA[lang].forEach(function(item, i) {
-    var b = document.createElement('button'); b.textContent = item.name;
-    b.onclick = function() { openQ(i, 0); }; box.appendChild(b);
-  });
-}
-function openQ(t, q) {
-  T = t; Q = q; show('v3');
-  var item = DATA[L][T].qs[Q];
-  document.getElementById('qName').textContent = item.n;
-  document.getElementById('qText').textContent = item.d;
-  document.getElementById('code').value = item.s;
-  document.getElementById('out').textContent = 'Вывод...';
-  document.getElementById('st').textContent = '';
-  var tabs = document.getElementById('tabs'); tabs.innerHTML = '';
-  DATA[L][T].qs.forEach(function(_, i) {
-    var b = document.createElement('button'); b.textContent = i + 1;
-    b.onclick = function() { openQ(T, i); }; tabs.appendChild(b);
-  });
-}
-function check() {
-  var c = document.getElementById('code').value, item = DATA[L][T].qs[Q];
-  var out = document.getElementById('out'), st = document.getElementById('st');
-  if (L === 'py') {
-    try {
-      var o = [], js = '';
-      c.split('\n').forEach(function(l) {
-        l = l.trim();
-        if (l.indexOf('print(') === 0) js += 'o.push(String(' + l.slice(6, -1) + '));';
-        else if (l) js += l + ';';
-      });
-      new Function('o', js)(o);
-      var res = o.join('\n'); out.textContent = res;
-      st.textContent = res === item.a ? '✅ Верно!' : '❌ Ожидалось: ' + item.a;
-    } catch(e) { out.textContent = e.message; st.textContent = '⚠️ Ошибка'; }
-  } else {
-    var ok = c.indexOf('cout') !== -1 && c.indexOf(item.r) !== -1 && c.indexOf(';') !== -1;
-    out.textContent = ok ? item.a : 'Ошибка';
-    st.textContent = ok ? '✅ Верно!' : '❌ Проверь код';
-  }
+
+function ok() {
+    var st = document.getElementById("status");
+    st.style.color = "#4ade80";
+    st.textContent = "✅ Верно!";
+    localStorage.setItem("ok-" + curLang + "-" + curTopic + "-" + curTask, "1");
+    renderTabs();
+    document.getElementById("nextBtn").style.display = "inline-block";
 }
 </script>
+
 </body>
 </html>
