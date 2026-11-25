@@ -108,37 +108,25 @@
 <script>
     var currentLang = "";
 
-    var courses = {
-        python: {
-            title: "Python — Урок 1: Вывод данных и числа",
-            theory: "<p>В Python для вывода текста или результата вычислений используется функция <code>print()</code>.</p><pre>print(10 + 5)  # Выведет 15</pre>",
-            task: "Напиши программу, которая вычислит и выведет сумму чисел <code>25</code> и <code>17</code>.",
-            starterCode: "# Напиши свой код ниже:\nprint()",
-            expected: "42"
-        },
-        cpp: {
-            title: "C++ — Урок 1: Структура программы и вывод",
-            theory: "<p>Любая программа на C++ начинается с функции <code>main()</code>. Для вывода текста в консоль используется поток <code>std::cout</code> из библиотеки <code>&lt;iostream&gt;</code>.</p><pre>#include &lt;iostream&gt;\n\nint main() {\n    std::cout &lt;&lt; \"Привет, мир!\";\n    return 0;\n}</pre>",
-            task: "Напиши программу на C++, которая выведет в консоль фразу <code>Hello C++</code>.",
-            starterCode: "#include <iostream>\n\nint main() {\n    // Напиши вывод ниже:\n    \n    return 0;\n}",
-            expected: "Hello C++"
-        }
-    };
-
     function openCourse(lang) {
         currentLang = lang;
-        var data = courses[lang];
-
         document.getElementById("home-view").style.display = "none";
         document.getElementById("lesson-view").style.display = "flex";
         document.getElementById("backBtn").style.display = "block";
-
-        document.getElementById("lesson-title").textContent = data.title;
-        document.getElementById("lesson-theory").innerHTML = data.theory;
-        document.getElementById("lesson-task").innerHTML = data.task;
-        document.getElementById("code").value = data.starterCode;
         document.getElementById("console").textContent = "Вывод программы появится здесь...";
         document.getElementById("status").textContent = "";
+
+        if (lang === "python") {
+            document.getElementById("lesson-title").textContent = "Python — Урок 1: Вывод данных и числа";
+            document.getElementById("lesson-theory").innerHTML = "<p>В Python для вывода текста или результата вычислений используется функция <code>print()</code>.</p><pre>print(10 + 5)  # Выведет 15</pre>";
+            document.getElementById("lesson-task").innerHTML = "Напиши программу, которая вычислит и выведет сумму чисел <code>25</code> и <code>17</code>.";
+            document.getElementById("code").value = "# Напиши свой код ниже:\nprint()";
+        } else {
+            document.getElementById("lesson-title").textContent = "C++ — Урок 1: Структура программы и вывод";
+            document.getElementById("lesson-theory").innerHTML = "<p>Любая программа на C++ начинается с функции <code>main()</code>. Для вывода текста в консоль используется поток <code>std::cout</code> из библиотеки <code>&lt;iostream&gt;</code>.</p><pre>#include &lt;iostream&gt;\n\nint main() {\n    std::cout &lt;&lt; \"Привет, мир!\";\n    return 0;\n}</pre>";
+            document.getElementById("lesson-task").innerHTML = "Напиши программу на C++, которая выведет в консоль фразу <code>Hello C++</code>.";
+            document.getElementById("code").value = "#include <iostream>\n\nint main() {\n    // Напиши вывод ниже:\n    \n    return 0;\n}";
+        }
     }
 
     function goHome() {
@@ -150,31 +138,31 @@
     function runCode() {
         var userCode = document.getElementById("code").value;
         var consoleEl = document.getElementById("console");
-        var expected = courses[currentLang].expected;
 
         if (currentLang === "python") {
             try {
                 var lines = userCode.split("\n");
                 var outputs = [];
                 var jsLines = [];
-                for (var i = 0; i < lines.length; i++) {
-                    var line = lines[i].split("#")[0].trim();
-                    if (!line) continue;
+                lines.forEach(function(rawLine) {
+                    var commentPos = rawLine.indexOf("#");
+                    var line = (commentPos !== -1 ? rawLine.slice(0, commentPos) : rawLine).trim();
+                    if (!line) return;
                     if (line.indexOf("print(") === 0 && line.slice(-1) === ")") {
                         var expr = line.slice(6, -1);
                         jsLines.push("__out.push(String(" + expr + "));");
                     } else {
                         jsLines.push("var " + line + ";");
                     }
-                }
+                });
                 var runner = new Function("__out", jsLines.join("\n"));
                 runner(outputs);
                 var result = outputs.join("\n");
                 consoleEl.textContent = result || "(Пустой вывод)";
-                if (result.trim() === expected) {
+                if (result.trim() === "42") {
                     setStatus(true, "✅ Отлично! Задание по Python выполнено верно.");
                 } else {
-                    setStatus(false, "❌ Ожидался вывод: " + expected);
+                    setStatus(false, "❌ Ожидался вывод: 42");
                 }
             } catch (err) {
                 consoleEl.textContent = "Ошибка синтаксиса Python: " + err.message;
@@ -195,13 +183,16 @@ consoleEl.textContent = "Ошибка компиляции: не найдена 
 setStatus(false, "⚠️ Программа должна содержать функцию int main().");
 return;
 }
-if (coutMatch && coutMatch[1] !== undefined) {
-var printedText = coutMatch[1];
+if (coutMatch) {
+var fullMatch = coutMatch.at(0);
+var firstQuote = fullMatch.indexOf('"');
+var lastQuote = fullMatch.lastIndexOf('"');
+var printedText = fullMatch.slice(firstQuote + 1, lastQuote);
 consoleEl.textContent = printedText;
-if (printedText === expected) {
+if (printedText === "Hello C++") {
 setStatus(true, "✅ Скомпилировано без ошибок! Задание по C++ выполнено.");
 } else {
-setStatus(false, "❌ Выведено "" + printedText + "", а ожидалось "" + expected + "".");
+setStatus(false, "❌ Выведено "" + printedText + "", а ожидалось "Hello C++".");
 }
 } else {
 consoleEl.textContent = "Ошибка компиляции: проверь синтаксис cout << "..." и точку с запятой (;) в конце.";
