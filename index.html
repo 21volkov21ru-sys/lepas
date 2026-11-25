@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CodeHub — Практикум по темам</title>
     <style>
-        body { font-family: sans-serif; margin: 0; background: #0f172a; color: #f8fafc; }
+        body { font-family: system-ui, -apple-system, sans-serif; margin: 0; background: #0f172a; color: #f8fafc; }
         header { background: #1e293b; padding: 16px 32px; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; }
         .logo { font-size: 20px; font-weight: bold; cursor: pointer; }
         .logo span { color: #38bdf8; }
         .nav-btns { display: flex; gap: 10px; }
-        .back-btn { background: #334155; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; display: none; }
+        .back-btn { background: #334155; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; display: none; font-size: 14px; }
+        .back-btn:hover { background: #475569; }
         .hero { text-align: center; padding: 40px 20px 20px; }
         .grid { display: flex; gap: 20px; max-width: 900px; margin: 20px auto; padding: 0 20px; flex-wrap: wrap; }
         .card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; flex: 1; min-width: 260px; }
@@ -27,10 +28,10 @@
         .task-tab.solved { border-color: #10b981; color: #4ade80; }
         .lesson-panels { display: flex; gap: 20px; flex-wrap: wrap; }
         .panel { background: #1e293b; padding: 24px; border-radius: 12px; flex: 1; min-width: 300px; border: 1px solid #334155; }
-        pre { background: #020617; padding: 12px; border-radius: 6px; border: 1px solid #334155; }
-        textarea { width: 100%; height: 170px; font-family: monospace; font-size: 15px; padding: 12px; background: #020617; color: #38bdf8; border: 1px solid #334155; border-radius: 6px; box-sizing: border-box; }
-        .btn-run { background: #10b981; color: #0f172a; font-weight: bold; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; margin-top: 12px; }
-        .btn-next { background: #38bdf8; color: #0f172a; font-weight: bold; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; margin-top: 12px; display: none; }
+        pre { background: #020617; padding: 12px; border-radius: 6px; border: 1px solid #334155; color: #e2e8f0; }
+        textarea { width: 100%; height: 170px; font-family: monospace; font-size: 15px; padding: 12px; background: #020617; color: #38bdf8; border: 1px solid #334155; border-radius: 6px; box-sizing: border-box; resize: vertical; }
+        .btn-run { background: #10b981; color: #0f172a; font-weight: bold; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; margin-top: 12px; font-size: 15px; }
+        .btn-next { background: #38bdf8; color: #0f172a; font-weight: bold; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; margin-top: 12px; display: none; font-size: 15px; }
         #console { margin-top: 16px; padding: 12px; background: #000; color: #4ade80; font-family: monospace; border-radius: 6px; min-height: 40px; white-space: pre-wrap; }
         #status { margin-top: 12px; font-weight: bold; }
     </style>
@@ -48,17 +49,17 @@
 <div id="home-view">
     <div class="hero">
         <h1>Выбери язык программирования</h1>
-        <p>Внутри каждого языка — темы, а в каждой теме по 6 практических задач.</p>
+        <p>Внутри каждого языка — 3 темы, а в каждой теме по 6 практических задач.</p>
     </div>
     <div class="grid">
         <div class="card">
             <h2>Python</h2>
-            <p>3 темы • 18 задач (print, переменные, условия if).</p>
+            <p>3 темы • 18 задач (команда print, переменные и математика, условия if).</p>
             <button class="btn-start btn-py" onclick="openTopics('py')">Открыть темы Python →</button>
         </div>
         <div class="card">
             <h2>C++</h2>
-            <p>3 темы • 18 задач (cout, переменные int, условия и циклы).</p>
+            <p>3 темы • 18 задач (вывод cout, переменные int и cin, условия if и циклы).</p>
             <button class="btn-start btn-cpp" onclick="openTopics('cpp')">Открыть темы C++ →</button>
         </div>
     </div>
@@ -94,6 +95,7 @@
 </div>
 
 <script>
+var NL = String.fromCharCode(10);
 var curLang = "";
 var curTopic = 0;
 var curTask = 0;
@@ -106,34 +108,34 @@ var db = {
             list: [
                 { t: "Задача 1: Вывод числа", th: "<pre>print(100)</pre>", d: "Выведи число 2026.", s: "print()", ans: "2026" },
                 { t: "Задача 2: Сложение в print", th: "<pre>print(10 + 5)</pre>", d: "Выведи сумму 34 и 66.", s: "print()", ans: "100" },
-                { t: "Задача 3: Вывод текста", th: "<pre>print(\"Привет\")</pre>", d: "Выведи слово Python в кавычках.", s: "print()", ans: "Python" },
+                { t: "Задача 3: Вывод текста", th: "<pre>print('Привет')</pre>", d: "Выведи слово Python в кавычках.", s: "print()", ans: "Python" },
                 { t: "Задача 4: Умножение", th: "<pre>print(5 * 4 - 2)</pre>", d: "Выведи результат 15 * 4 - 10.", s: "print()", ans: "50" },
-                { t: "Задача 5: Две строки", th: "<pre>print(1)\nprint(2)</pre>", d: "Выведи 10 на первой строке и 20 на второй.", s: "print()\nprint()", ans: "10\n20" },
-                { t: "Задача 6: Склейка строк", th: "<pre>print(\"Code\" + \"Hub\")</pre>", d: "Склей \"Py\" и \"thon\" с помощью +.", s: "print()", ans: "Python" }
+                { t: "Задача 5: Две строки", th: "<pre>print(1)" + NL + "print(2)</pre>", d: "Выведи 10 на первой строке и 20 на второй.", s: "print()" + NL + "print()", ans: "10" + NL + "20" },
+                { t: "Задача 6: Склейка строк", th: "<pre>print('Code' + 'Hub')</pre>", d: "Склей 'Py' и 'thon' с помощью +.", s: "print()", ans: "Python" }
             ]
         },
         {
             name: "Тема 2. Переменные и математика",
             desc: "Создание переменных, сложение, степени и остаток (6 задач).",
             list: [
-                { t: "Задача 1: Переменная", th: "<pre>x = 12\nprint(x)</pre>", d: "Создай a = 77 и выведи a.", s: "a = 77\n", ans: "77" },
-                { t: "Задача 2: Сумма переменных", th: "<pre>print(x + y)</pre>", d: "Даны x = 18 и y = 24. Выведи x + y.", s: "x = 18\ny = 24\n", ans: "42" },
-                { t: "Задача 3: Периметр", th: "<pre>print((a + b) * 2)</pre>", d: "Даны a = 5 и b = 8. Выведи периметр.", s: "a = 5\nb = 8\n", ans: "26" },
+                { t: "Задача 1: Переменная", th: "<pre>x = 12" + NL + "print(x)</pre>", d: "Создай a = 77 и выведи a.", s: "a = 77" + NL, ans: "77" },
+                { t: "Задача 2: Сумма переменных", th: "<pre>print(x + y)</pre>", d: "Даны x = 18 и y = 24. Выведи x + y.", s: "x = 18" + NL + "y = 24" + NL, ans: "42" },
+                { t: "Задача 3: Периметр", th: "<pre>print((a + b) * 2)</pre>", d: "Даны a = 5 и b = 8. Выведи периметр.", s: "a = 5" + NL + "b = 8" + NL, ans: "26" },
                 { t: "Задача 4: Степень **", th: "<pre>print(2 ** 3)</pre>", d: "Выведи 2 в 8-й степени (2 ** 8).", s: "print()", ans: "256" },
                 { t: "Задача 5: Остаток %", th: "<pre>print(10 % 3)</pre>", d: "Выведи остаток 47 % 5.", s: "print()", ans: "2" },
-                { t: "Задача 6: Изменение переменной", th: "<pre>hp = hp + 10</pre>", d: "Дано hp = 50. Прибавь 35 и выведи hp.", s: "hp = 50\n\nprint(hp)", ans: "85" }
+                { t: "Задача 6: Изменение переменной", th: "<pre>hp = hp + 10</pre>", d: "Дано hp = 50. Прибавь 35 (hp = hp + 35) и выведи hp.", s: "hp = 50" + NL + NL + "print(hp)", ans: "85" }
             ]
         },
         {
             name: "Тема 3. Условный оператор if",
             desc: "Сравнение чисел и проверка условий (6 задач).",
             list: [
-                { t: "Задача 1: Больше или равно", th: "<pre>if x > 5: print(\"Да\")</pre>", d: "Если age >= 14, выведи \"OK\".", s: "age = 16\nif age >= 14: print()", ans: "OK" },
-                { t: "Задача 2: Равенство ==", th: "<pre>if pin == 1234: print(\"Да\")</pre>", d: "Если pin == 1234, выведи \"Open\".", s: "pin = 1234\nif pin == 1234: print()", ans: "Open" },
-                { t: "Задача 3: Чётность", th: "<pre>if n % 2 == 0: print(\"Да\")</pre>", d: "Если n % 2 == 0, выведи \"Even\".", s: "n = 24\nif n % 2 == 0: print()", ans: "Even" },
-                { t: "Задача 4: Сравнение a и b", th: "<pre>if a > b: print(a)</pre>", d: "Если a > b, выведи a.", s: "a = 45\nb = 30\n", ans: "45" },
-                { t: "Задача 5: Меньше нуля", th: "<pre>if t < 0: print(\"Cold\")</pre>", d: "Если t < 0, выведи \"Cold\".", s: "t = -5\n", ans: "Cold" },
-                { t: "Задача 6: Бонус", th: "<pre>if c >= 100: print(c + 50)</pre>", d: "Если c >= 100, выведи c + 50.", s: "c = 120\n", ans: "170" }
+                { t: "Задача 1: Больше или равно", th: "<pre>if x > 5: print('Да')</pre>", d: "Если age >= 14, выведи 'OK'.", s: "age = 16" + NL + "if age >= 14: print()", ans: "OK" },
+                { t: "Задача 2: Равенство ==", th: "<pre>if pin == 1234: print('Да')</pre>", d: "Если pin == 1234, выведи 'Open'.", s: "pin = 1234" + NL + "if pin == 1234: print()", ans: "Open" },
+                { t: "Задача 3: Чётность", th: "<pre>if n % 2 == 0: print('Да')</pre>", d: "Если n % 2 == 0, выведи 'Even'.", s: "n = 24" + NL + "if n % 2 == 0: print()", ans: "Even" },
+                { t: "Задача 4: Сравнение a и b", th: "<pre>if a > b: print(a)</pre>", d: "Если a > b, выведи a.", s: "a = 45" + NL + "b = 30" + NL, ans: "45" },
+                { t: "Задача 5: Меньше нуля", th: "<pre>if t < 0: print('Cold')</pre>", d: "Если t < 0, выведи 'Cold'.", s: "t = -5" + NL, ans: "Cold" },
+                { t: "Задача 6: Бонус", th: "<pre>if c >= 100: print(c + 50)</pre>", d: "Если c >= 100, выведи c + 50.", s: "c = 120" + NL, ans: "170" }
             ]
         }
     ],
@@ -142,36 +144,36 @@ var db = {
             name: "Тема 1. Вывод данных std::cout",
             desc: "Библиотека iostream и вывод строк и чисел (6 задач).",
             list: [
-                { t: "Задача 1: Вывод текста", th: "<pre>std::cout &lt;&lt; \"Hi\";</pre>", d: "Выведи \"Hello C++\".", s: "#include <iostream>\nint main() {\n    \n    return 0;\n}", ans: "Hello C++", req: ["cout", "\"Hello C++\"", ";"] },
-                { t: "Задача 2: Вывод числа", th: "<pre>std::cout &lt;&lt; 2026;</pre>", d: "Выведи число 2026.", s: "#include <iostream>\nint main() {\n    \n    return 0;\n}", ans: "2026", req: ["cout", "2026", ";"] },
-                { t: "Задача 3: Сложение", th: "<pre>std::cout &lt;&lt; 40 + 60;</pre>", d: "Выведи сумму 40 + 60.", s: "#include <iostream>\nint main() {\n    \n    return 0;\n}", ans: "100", req: ["cout", "40", "60", ";"] },
-{ t: "Задача 4: Цепочка <<", th: "std::cout << "A" << "B";", d: "Выведи "C++" и "Top" через <<.", s: "#include \nint main() {\n    \n    return 0;\n}", ans: "C++Top", req: ["cout", ""C++"", ""Top"", ";"] },
-{ t: "Задача 5: Перенос endl", th: "std::cout << 5 << std::endl;", d: "Выведи 5 и std::endl.", s: "#include \nint main() {\n    \n    return 0;\n}", ans: "5", req: ["cout", "5", "endl", ";"] },
-{ t: "Задача 6: namespace std", th: "using namespace std;\ncout << "Ready";", d: "Добавь using namespace std; и выведи "Ready".", s: "#include \n\nint main() {\n    \n    return 0;\n}", ans: "Ready", req: ["using namespace std;", "cout", ""Ready"", ";"] }
+                { t: "Задача 1: Вывод текста", th: "<pre>std::cout &lt;&lt; \"Hi\";</pre>", d: "Выведи \"Hello C++\".", s: "#include <iostream>" + NL + "int main() {" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "Hello C++", req: ["cout", "\"Hello C++\"", ";"] },
+                { t: "Задача 2: Вывод числа", th: "<pre>std::cout &lt;&lt; 2026;</pre>", d: "Выведи число 2026.", s: "#include <iostream>" + NL + "int main() {" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "2026", req: ["cout", "2026", ";"] },
+{ t: "Задача 3: Сложение", th: "std::cout << 40 + 60;", d: "Выведи сумму 40 + 60.", s: "#include " + NL + "int main() {" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "100", req: ["cout", "40", "60", ";"] },
+{ t: "Задача 4: Цепочка <<", th: "std::cout << "A" << "B";", d: "Выведи "C++" и "Top" через <<.", s: "#include " + NL + "int main() {" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "C++Top", req: ["cout", ""C++"", ""Top"", ";"] },
+{ t: "Задача 5: Перенос endl", th: "std::cout << 5 << std::endl;", d: "Выведи 5 и std::endl.", s: "#include " + NL + "int main() {" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "5", req: ["cout", "5", "endl", ";"] },
+{ t: "Задача 6: namespace std", th: "using namespace std;" + NL + "cout << "Ready";", d: "Добавь using namespace std; и выведи "Ready".", s: "#include " + NL + NL + "int main() {" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "Ready", req: ["using namespace std;", "cout", ""Ready"", ";"] }
 ]
 },
 {
 name: "Тема 2. Переменные int и ввод cin",
 desc: "Работа с целыми числами и чтение данных (6 задач).",
 list: [
-{ t: "Задача 1: Переменная int", th: "int level = 15;\nstd::cout << level;", d: "Объяви int level = 15; и выведи её.", s: "#include \nint main() {\n    \n    return 0;\n}", ans: "15", req: ["int", "level", "15", "cout", ";"] },
-{ t: "Задача 2: Сумма a + b", th: "std::cout << a + b;", d: "Выведи a + b.", s: "#include \nint main() {\n    int a = 12, b = 30;\n    \n    return 0;\n}", ans: "42", req: ["cout", "a + b", ";"] },
-{ t: "Задача 3: Умножение", th: "std::cout << w * h;", d: "Выведи w * h.", s: "#include \nint main() {\n    int w = 7, h = 9;\n    \n    return 0;\n}", ans: "63", req: ["cout", "w * h", ";"] },
-{ t: "Задача 4: Остаток %", th: "std::cout << 25 % 4;", d: "Выведи 25 % 4.", s: "#include \nint main() {\n    \n    return 0;\n}", ans: "1", req: ["cout", "25 % 4", ";"] },
-{ t: "Задача 5: Прибавление +=", th: "score += 25;\nstd::cout << score;", d: "Прибавь 25 к score и выведи.", s: "#include \nint main() {\n    int score = 50;\n    \n    return 0;\n}", ans: "75", req: ["score", "25", "cout", ";"] },
-{ t: "Задача 6: Ввод cin", th: "std::cin >> n;", d: "Считай число в n через std::cin >> n;.", s: "#include \nint main() {\n    int n;\n    \n    return 0;\n}", ans: "Ввод n готов", req: ["cin", ">>", "n", ";"] }
+{ t: "Задача 1: Переменная int", th: "int level = 15;" + NL + "std::cout << level;", d: "Объяви int level = 15; и выведи её.", s: "#include " + NL + "int main() {" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "15", req: ["int", "level", "15", "cout", ";"] },
+{ t: "Задача 2: Сумма a + b", th: "std::cout << a + b;", d: "Выведи a + b.", s: "#include " + NL + "int main() {" + NL + "    int a = 12, b = 30;" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "42", req: ["cout", "a + b", ";"] },
+{ t: "Задача 3: Умножение", th: "std::cout << w * h;", d: "Выведи w * h.", s: "#include " + NL + "int main() {" + NL + "    int w = 7, h = 9;" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "63", req: ["cout", "w * h", ";"] },
+{ t: "Задача 4: Остаток %", th: "std::cout << 25 % 4;", d: "Выведи 25 % 4.", s: "#include " + NL + "int main() {" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "1", req: ["cout", "25 % 4", ";"] },
+{ t: "Задача 5: Прибавление +=", th: "score += 25;" + NL + "std::cout << score;", d: "Прибавь 25 к score и выведи.", s: "#include " + NL + "int main() {" + NL + "    int score = 50;" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "75", req: ["score", "25", "cout", ";"] },
+{ t: "Задача 6: Ввод cin", th: "std::cin >> n;", d: "Считай число в n через std::cin >> n;.", s: "#include " + NL + "int main() {" + NL + "    int n;" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "Ввод n готов", req: ["cin", ">>", "n", ";"] }
 ]
 },
 {
 name: "Тема 3. Условия if и циклы for",
 desc: "Ветвления if/else и повторения for/while (6 задач).",
 list: [
-{ t: "Задача 1: Условие if", th: "if (x > 5) { std::cout << "Yes"; }", d: "Если x > 5, выведи "Yes".", s: "#include \nint main() {\n    int x = 10;\n    \n    return 0;\n}", ans: "Yes", req: ["if", "x > 5", "cout", ""Yes"", ";"] },
-{ t: "Задача 2: Равенство ==", th: "if (code == 777) { std::cout << "Win"; }", d: "Если code == 777, выведи "Win".", s: "#include \nint main() {\n    int code = 777;\n    \n    return 0;\n}", ans: "Win", req: ["if", "code == 777", "cout", ""Win"", ";"] },
-{ t: "Задача 3: Ветка else", th: "else { std::cout << "No"; }", d: "Допиши else с выводом "No".", s: "#include \nint main() {\n    int a = 2;\n    if (a > 5) { std::cout << "Yes"; }\n    \n    return 0;\n}", ans: "No", req: ["else", "cout", ""No"", ";"] },
-{ t: "Задача 4: Цикл for (0..4)", th: "for (int i = 0; i < 5; i++) { std::cout << i; }", d: "Напиши цикл for от 0 до 4 и выведи i.", s: "#include \nint main() {\n    \n    return 0;\n}", ans: "01234", req: ["for", "int i = 0", "i < 5", "i++", "cout"] },
-{ t: "Задача 5: Цикл for (1..3)", th: "for (int i = 1; i <= 3; i++) { std::cout << i; }", d: "Напиши цикл от 1 до 3 и выведи i.", s: "#include \nint main() {\n    \n    return 0;\n}", ans: "123", req: ["for", "int i = 1", "i <= 3", "i++", "cout"] },
-{ t: "Задача 6: Цикл while", th: "while (n > 0) { n--; }", d: "Напиши цикл while (n > 0) и внутри n--;.", s: "#include \nint main() {\n    int n = 3;\n    \n    return 0;\n}", ans: "Готово", req: ["while", "n > 0", "n--", ";"] }
+{ t: "Задача 1: Условие if", th: "if (x > 5) { std::cout << "Yes"; }", d: "Если x > 5, выведи "Yes".", s: "#include " + NL + "int main() {" + NL + "    int x = 10;" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "Yes", req: ["if", "x > 5", "cout", ""Yes"", ";"] },
+{ t: "Задача 2: Равенство ==", th: "if (code == 777) { std::cout << "Win"; }", d: "Если code == 777, выведи "Win".", s: "#include " + NL + "int main() {" + NL + "    int code = 777;" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "Win", req: ["if", "code == 777", "cout", ""Win"", ";"] },
+{ t: "Задача 3: Ветка else", th: "else { std::cout << "No"; }", d: "Допиши else с выводом "No".", s: "#include " + NL + "int main() {" + NL + "    int a = 2;" + NL + "    if (a > 5) { std::cout << "Yes"; }" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "No", req: ["else", "cout", ""No"", ";"] },
+{ t: "Задача 4: Цикл for (0..4)", th: "for (int i = 0; i < 5; i++) { std::cout << i; }", d: "Напиши цикл for от 0 до 4 и выведи i.", s: "#include " + NL + "int main() {" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "01234", req: ["for", "int i = 0", "i < 5", "i++", "cout"] },
+{ t: "Задача 5: Цикл for (1..3)", th: "for (int i = 1; i <= 3; i++) { std::cout << i; }", d: "Напиши цикл от 1 до 3 и выведи i.", s: "#include " + NL + "int main() {" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "123", req: ["for", "int i = 1", "i <= 3", "i++", "cout"] },
+{ t: "Задача 6: Цикл while", th: "while (n > 0) { n--; }", d: "Напиши цикл while (n > 0) и внутри n--;.", s: "#include " + NL + "int main() {" + NL + "    int n = 3;" + NL + "    " + NL + "    return 0;" + NL + "}", ans: "Готово", req: ["while", "n > 0", "n--", ";"] }
 ]
 }
 ]
@@ -266,9 +268,10 @@ var topics = (curLang === "py") ? db.py : db.cpp;
 var item = topics.at(curTopic).list.at(curTask);
 if (curLang === "py") {
 try {
-var lines = code.split("\n");
+var lines = code.split(NL);
 var resArr = [];
 var js = "";
+var declared = {};
 lines.forEach(function(raw) {
 var ln = raw.trim();
 if (!ln || ln.charAt(0) === "#") return;
@@ -277,17 +280,23 @@ var cp = ln.indexOf(":");
 var cond = ln.substring(3, cp).trim();
 var bd = ln.substring(cp + 1).trim();
 if (bd.indexOf("print(") === 0 && bd.charAt(bd.length - 1) === ")") {
-js += "if (" + cond + ") { __o.push(String(" + bd.substring(6, bd.length - 1) + ")); }\n";
+js += "if (" + cond + ") { __o.push(String(" + bd.substring(6, bd.length - 1) + ")); }" + NL;
 }
 } else if (ln.indexOf("print(") === 0 && ln.charAt(ln.length - 1) === ")") {
-js += "__o.push(String(" + ln.substring(6, ln.length - 1) + "));\n";
+js += "__o.push(String(" + ln.substring(6, ln.length - 1) + "));" + NL;
+} else if (ln.indexOf("=") !== -1) {
+var vName = ln.split("=").at(0).trim();
+if (!declared[vName]) {
+declared[vName] = true;
+js += "var " + ln + ";" + NL;
 } else {
-js += "var " + ln + ";\n";
+js += ln + ";" + NL;
+}
 }
 });
 var fn = new Function("__o", js);
 fn(resArr);
-var res = resArr.join("\n");
+var res = resArr.join(NL);
 out.textContent = res || "(Пусто)";
 if (res.trim() === item.ans) ok();
 else { st.style.color = "#f87171"; st.textContent = "❌ Ожидалось: " + item.ans; }
