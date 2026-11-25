@@ -108,7 +108,7 @@ var db = {
                 { t: "Задача 2: Сложение в print", th: "<pre>print(10 + 5)</pre>", d: "Выведи сумму 34 и 66.", s: "print()", ans: "100" },
                 { t: "Задача 3: Вывод текста", th: "<pre>print(\"Привет\")</pre>", d: "Выведи слово Python в кавычках.", s: "print()", ans: "Python" },
                 { t: "Задача 4: Умножение", th: "<pre>print(5 * 4 - 2)</pre>", d: "Выведи результат 15 * 4 - 10.", s: "print()", ans: "50" },
-                { t: "Задача 5: Две строки", th: "<pre>print(1)\nprint(2)</pre>", d: "Выведи 10 на первой строке и 20 на второй.", s: "print()\nprint()", ans: "10\n20" },
+                { t: "Задача 5: Две строки", th: "<pre>print(1)\\nprint(2)</pre>", d: "Выведи 10 на первой строке и 20 на второй.", s: "print()\\nprint()", ans: "10\\n20" },
                 { t: "Задача 6: Склейка строк", th: "<pre>print(\"Code\" + \"Hub\")</pre>", d: "Склей \"Py\" и \"thon\" с помощью +.", s: "print()", ans: "Python" }
             ]
         },
@@ -116,24 +116,24 @@ var db = {
             name: "Тема 2. Переменные и математика",
             desc: "Создание переменных, сложение, степени и остаток (6 задач).",
             list: [
-                { t: "Задача 1: Переменная", th: "<pre>x = 12\nprint(x)</pre>", d: "Создай a = 77 и выведи a.", s: "a = 77\n", ans: "77" },
-                { t: "Задача 2: Сумма переменных", th: "<pre>print(x + y)</pre>", d: "Даны x = 18 и y = 24. Выведи x + y.", s: "x = 18\ny = 24\n", ans: "42" },
-                { t: "Задача 3: Периметр", th: "<pre>print((a + b) * 2)</pre>", d: "Даны a = 5 и b = 8. Выведи периметр.", s: "a = 5\nb = 8\n", ans: "26" },
+                { t: "Задача 1: Переменная", th: "<pre>x = 12\\nprint(x)</pre>", d: "Создай a = 77 и выведи a.", s: "a = 77\\n", ans: "77" },
+                { t: "Задача 2: Сумма переменных", th: "<pre>print(x + y)</pre>", d: "Даны x = 18 и y = 24. Выведи x + y.", s: "x = 18\\ny = 24\\n", ans: "42" },
+                { t: "Задача 3: Периметр", th: "<pre>print((a + b) * 2)</pre>", d: "Даны a = 5 и b = 8. Выведи периметр.", s: "a = 5\\nb = 8\\n", ans: "26" },
                 { t: "Задача 4: Степень **", th: "<pre>print(2 ** 3)</pre>", d: "Выведи 2 в 8-й степени (2 ** 8).", s: "print()", ans: "256" },
                 { t: "Задача 5: Остаток %", th: "<pre>print(10 % 3)</pre>", d: "Выведи остаток 47 % 5.", s: "print()", ans: "2" },
-                { t: "Задача 6: Изменение переменной", th: "<pre>hp = hp + 10</pre>", d: "Дано hp = 50. Прибавь 35 и выведи hp.", s: "hp = 50\n\nprint(hp)", ans: "85" }
+                { t: "Задача 6: Изменение переменной", th: "<pre>hp = hp + 10</pre>", d: "Дано hp = 50. Прибавь 35 и выведи hp.", s: "hp = 50\\n\\nprint(hp)", ans: "85" }
             ]
         },
         {
             name: "Тема 3. Условный оператор if",
             desc: "Сравнение чисел и проверка условий (6 задач).",
             list: [
-                { t: "Задача 1: Больше или равно", th: "<pre>if x > 5: print(\"Да\")</pre>", d: "Если age >= 14, выведи \"OK\".", s: "age = 16\nif age >= 14: print()", ans: "OK" },
-                { t: "Задача 2: Равенство ==", th: "<pre>if pin == 1234: print(\"Да\")</pre>", d: "Если pin == 1234, выведи \"Open\".", s: "pin = 1234\nif pin == 1234: print()", ans: "Open" },
-                { t: "Задача 3: Чётность", th: "<pre>if n % 2 == 0: print(\"Да\")</pre>", d: "Если n % 2 == 0, выведи \"Even\".", s: "n = 24\nif n % 2 == 0: print()", ans: "Even" },
-                { t: "Задача 4: Сравнение a и b", th: "<pre>if a > b: print(a)</pre>", d: "Если a > b, выведи a.", s: "a = 45\nb = 30\n", ans: "45" },
-                { t: "Задача 5: Меньше нуля", th: "<pre>if t < 0: print(\"Cold\")</pre>", d: "Если t < 0, выведи \"Cold\".", s: "t = -5\n", ans: "Cold" },
-                { t: "Задача 6: Бонус", th: "<pre>if c >= 100: print(c + 50)</pre>", d: "Если c >= 100, выведи c + 50.", s: "c = 120\n", ans: "170" }
+                { t: "Задача 1: Больше или равно", th: "<pre>if x > 5: print(\"Да\")</pre>", d: "Если age >= 14, выведи \"OK\".", s: "age = 16\\nif age >= 14: print()", ans: "OK" },
+                { t: "Задача 2: Равенство ==", th: "<pre>if pin == 1234: print(\"Да\")</pre>", d: "Если pin == 1234, выведи \"Open\".", s: "pin = 1234\\nif pin == 1234: print()", ans: "Open" },
+                { t: "Задача 3: Чётность", th: "<pre>if n % 2 == 0: print(\"Да\")</pre>", d: "Если n % 2 == 0, выведи \"Even\".", s: "n = 24\\nif n % 2 == 0: print()", ans: "Even" },
+                { t: "Задача 4: Сравнение a и b", th: "<pre>if a > b: print(a)</pre>", d: "Если a > b, выведи a.", s: "a = 45\\nb = 30\\n", ans: "45" },
+                { t: "Задача 5: Меньше нуля", th: "<pre>if t < 0: print(\"Cold\")</pre>", d: "Если t < 0, выведи \"Cold\".", s: "t = -5\\n", ans: "Cold" },
+                { t: "Задача 6: Бонус", th: "<pre>if c >= 100: print(c + 50)</pre>", d: "Если c >= 100, выведи c + 50.", s: "c = 120\\n", ans: "170" }
             ]
         }
     ],
@@ -142,9 +142,9 @@ var db = {
             name: "Тема 1. Вывод данных std::cout",
             desc: "Библиотека iostream и вывод строк и чисел (6 задач).",
             list: [
-                { t: "Задача 1: Вывод текста", th: "<pre>std::cout &lt;&lt; \"Hi\";</pre>", d: "Выведи \"Hello C++\".", s: "#include <iostream>\nint main() {\n    \n    return 0;\n}", ans: "Hello C++", req: ["cout", "\"Hello C++\"", ";"] },
-                { t: "Задача 2: Вывод числа", th: "<pre>std::cout &lt;&lt; 2026;</pre>", d: "Выведи число 2026.", s: "#include <iostream>\nint main() {\n    \n    return 0;\n}", ans: "2026", req: ["cout", "2026", ";"] },
-                { t: "Задача 3: Сложение", th: "<pre>std::cout &lt;&lt; 40 + 60;</pre>", d: "Выведи сумму 40 + 60.", s: "#include <iostream>\nint main() {\n    \n    return 0;\n}", ans: "100", req: ["cout", "40", "60", ";"] },
+                { t: "Задача 1: Вывод текста", th: "<pre>std::cout &lt;&lt; \"Hi\";</pre>", d: "Выведи \"Hello C++\".", s: "#include <iostream>\\nint main() {\\n    \\n    return 0;\\n}", ans: "Hello C++", req: ["cout", "\"Hello C++\"", ";"] },
+                { t: "Задача 2: Вывод числа", th: "<pre>std::cout &lt;&lt; 2026;</pre>", d: "Выведи число 2026.", s: "#include <iostream>\\nint main() {\\n    \\n    return 0;\\n}", ans: "2026", req: ["cout", "2026", ";"] },
+                { t: "Задача 3: Сложение", th: "<pre>std::cout &lt;&lt; 40 + 60;</pre>", d: "Выведи сумму 40 + 60.", s: "#include <iostream>\\nint main() {\\n    \\n    return 0;\\n}", ans: "100", req: ["cout", "40", "60", ";"] },
 { t: "Задача 4: Цепочка <<", th: "std::cout << "A" << "B";", d: "Выведи "C++" и "Top" через <<.", s: "#include \nint main() {\n    \n    return 0;\n}", ans: "C++Top", req: ["cout", ""C++"", ""Top"", ";"] },
 { t: "Задача 5: Перенос endl", th: "std::cout << 5 << std::endl;", d: "Выведи 5 и std::endl.", s: "#include \nint main() {\n    \n    return 0;\n}", ans: "5", req: ["cout", "5", "endl", ";"] },
 { t: "Задача 6: namespace std", th: "using namespace std;\ncout << "Ready";", d: "Добавь using namespace std; и выведи "Ready".", s: "#include \n\nint main() {\n    \n    return 0;\n}", ans: "Ready", req: ["using namespace std;", "cout", ""Ready"", ";"] }
@@ -255,7 +255,7 @@ renderTabs();
 function nextTask() {
 var total = db[curLang][curTopic].list.length;
 if (curTask + 1 < total) loadTask(curTask + 1);
-else openTopics(curLang);
+else openTopics(currentLang);
 }
 function runCode() {
 var code = document.getElementById("code").value;
