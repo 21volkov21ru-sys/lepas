@@ -5,51 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CodeHub — Обучение Python и C++</title>
     <style>
-        :root {
-            --bg-main: #0f172a;
-            --bg-card: #1e293b;
-            --border: #334155;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent-py: #38bdf8;
-            --accent-cpp: #818cf8;
-            --success: #10b981;
-        }
-        body { font-family: system-ui, -apple-system, sans-serif; margin: 0; background: var(--bg-main); color: var(--text-main); }
-        header { background: var(--bg-card); padding: 16px 32px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 20px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; }
-        .logo span { color: var(--accent-py); }
-        .back-btn { background: transparent; color: var(--text-main); border: 1px solid var(--border); padding: 8px 16px; border-radius: 6px; cursor: pointer; display: none; }
-        .back-btn:hover { background: var(--border); }
-
-        .hero { text-align: center; padding: 60px 20px 30px; max-width: 750px; margin: auto; }
-        .hero h1 { font-size: 36px; margin-bottom: 12px; }
-        .hero p { color: var(--text-muted); font-size: 18px; line-height: 1.5; }
-
-        .lang-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; max-width: 800px; margin: 20px auto 60px; padding: 0 20px; }
-        .lang-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 28px; transition: transform 0.2s, border-color 0.2s; display: flex; flex-direction: column; justify-content: space-between; }
-        .lang-card:hover { transform: translateY(-4px); border-color: var(--accent-py); }
-        .lang-card.cpp-card:hover { border-color: var(--accent-cpp); }
-        
-        .lang-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-bottom: 14px; width: fit-content; }
-        .badge-py { background: rgba(56, 189, 248, 0.15); color: var(--accent-py); }
-        .badge-cpp { background: rgba(129, 140, 248, 0.15); color: var(--accent-cpp); }
-        
-        .lang-card h2 { margin: 0 0 10px; font-size: 24px; }
-        .lang-card p { color: var(--text-muted); font-size: 15px; line-height: 1.5; margin-bottom: 24px; }
-        
-        .btn-start { border: none; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer; width: 100%; color: #0f172a; }
-        .btn-py { background: var(--accent-py); }
-        .btn-cpp { background: var(--accent-cpp); }
-        .btn-start:hover { opacity: 0.9; }
-
-        #lesson-view { display: none; max-width: 1200px; margin: 24px auto; padding: 0 20px; gap: 20px; flex-wrap: wrap; }
-        .panel { background: var(--bg-card); padding: 24px; border-radius: 12px; flex: 1; min-width: 320px; border: 1px solid var(--border); }
-        pre { background: var(--bg-main); padding: 12px; border-radius: 6px; border: 1px solid var(--border); overflow-x: auto; color: #e2e8f0; }
-        textarea { width: 100%; height: 190px; font-family: monospace; font-size: 15px; padding: 12px; background: var(--bg-main); color: #38bdf8; border: 1px solid var(--border); border-radius: 6px; box-sizing: border-box; resize: vertical; }
-        .btn-run { background: var(--success); color: #0f172a; font-weight: bold; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; margin-top: 12px; font-size: 15px; }
-        .btn-run:hover { opacity: 0.9; }
-        #console { margin-top: 16px; padding: 12px; background: #000; color: #4ade80; font-family: monospace; border-radius: 6px; min-height: 45px; white-space: pre-wrap; }
+        body { font-family: sans-serif; margin: 0; background: #0f172a; color: #f8fafc; }
+        header { background: #1e293b; padding: 16px 32px; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 20px; font-weight: bold; cursor: pointer; }
+        .logo span { color: #38bdf8; }
+        .back-btn { background: #334155; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; display: none; }
+        .hero { text-align: center; padding: 50px 20px 20px; }
+        .lang-grid { display: flex; gap: 20px; max-width: 800px; margin: 20px auto; padding: 0 20px; flex-wrap: wrap; }
+        .lang-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; flex: 1; min-width: 260px; }
+        .btn-start { border: none; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer; width: 100%; margin-top: 15px; color: #0f172a; }
+        .btn-py { background: #38bdf8; }
+        .btn-cpp { background: #818cf8; }
+        #lesson-view { display: none; max-width: 1100px; margin: 24px auto; padding: 0 20px; gap: 20px; flex-wrap: wrap; }
+        .panel { background: #1e293b; padding: 24px; border-radius: 12px; flex: 1; min-width: 300px; border: 1px solid #334155; }
+        pre { background: #020617; padding: 12px; border-radius: 6px; overflow-x: auto; }
+        textarea { width: 100%; height: 170px; font-family: monospace; font-size: 15px; padding: 12px; background: #020617; color: #38bdf8; border: 1px solid #334155; border-radius: 6px; box-sizing: border-box; }
+        .btn-run { background: #10b981; color: #0f172a; font-weight: bold; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; margin-top: 12px; font-size: 15px; }
+        #console { margin-top: 16px; padding: 12px; background: #000; color: #4ade80; font-family: monospace; border-radius: 6px; min-height: 40px; white-space: pre-wrap; }
         #status { margin-top: 12px; font-weight: bold; }
     </style>
 </head>
@@ -63,25 +35,19 @@
 <div id="home-view">
     <div class="hero">
         <h1>Выбери язык программирования</h1>
-        <p>Изучай теорию на понятных примерах и сразу пиши код в интерактивном тренажёре.</p>
+        <p>Изучай теорию на простых примерах и пиши код прямо в браузере.</p>
     </div>
 
     <div class="lang-grid">
         <div class="lang-card">
-            <div>
-                <span class="lang-badge badge-py">Быстрый старт</span>
-                <h2>Python</h2>
-                <p>Язык с чистым и понятным синтаксисом. Отлично подходит для новичков, автоматизации, анализа данных и нейросетей.</p>
-            </div>
+            <h2>Python</h2>
+            <p>Язык с понятным синтаксисом. Отличный старт для новичков и анализа данных.</p>
             <button class="btn-start btn-py" onclick="openCourse('python')">Учить Python →</button>
         </div>
 
-        <div class="lang-card cpp-card">
-            <div>
-                <span class="lang-badge badge-cpp">Высокая скорость</span>
-                <h2>C++</h2>
-                <p>Мощный компилируемый язык. Используется для создания игровых движков, операционных систем и олимпиадного программирования.</p>
-            </div>
+        <div class="lang-card">
+            <h2>C++</h2>
+            <p>Мощный язык для создания игр, программ и олимпиадного программирования.</p>
             <button class="btn-start btn-cpp" onclick="openCourse('cpp')">Учить C++ →</button>
         </div>
     </div>
@@ -89,15 +55,15 @@
 
 <div id="lesson-view">
     <div class="panel">
-        <h2 id="lesson-title">Название урока</h2>
+        <h2 id="lesson-title">Урок</h2>
         <div id="lesson-theory"></div>
-        <hr style="border-color: var(--border); margin: 20px 0;">
-        <h3>Практическое задание</h3>
+        <hr style="border-color: #334155;">
+        <h3>Задание</h3>
         <p id="lesson-task"></p>
     </div>
 
     <div class="panel">
-        <h2 id="editor-title">Редактор кода</h2>
+        <h2>Редактор кода</h2>
         <textarea id="code"></textarea>
         <button class="btn-run" onclick="runCode()">▶ Запустить и проверить</button>
         <div id="console">Вывод программы появится здесь...</div>
@@ -106,102 +72,92 @@
 </div>
 
 <script>
-    var currentLang = "";
+var currentLang = "";
 
-    function openCourse(lang) {
-        currentLang = lang;
-        document.getElementById("home-view").style.display = "none";
-        document.getElementById("lesson-view").style.display = "flex";
-        document.getElementById("backBtn").style.display = "block";
-        document.getElementById("console").textContent = "Вывод программы появится здесь...";
-        document.getElementById("status").textContent = "";
+function openCourse(lang) {
+    currentLang = lang;
+    document.getElementById("home-view").style.display = "none";
+    document.getElementById("lesson-view").style.display = "flex";
+    document.getElementById("backBtn").style.display = "block";
+    document.getElementById("console").textContent = "Вывод программы появится здесь...";
+    document.getElementById("status").textContent = "";
 
-        if (lang === "python") {
-            document.getElementById("lesson-title").textContent = "Python — Урок 1: Вывод данных и числа";
-            document.getElementById("lesson-theory").innerHTML = "<p>В Python для вывода текста или результата вычислений используется функция <code>print()</code>.</p><pre>print(10 + 5)  # Выведет 15</pre>";
-            document.getElementById("lesson-task").innerHTML = "Напиши программу, которая вычислит и выведет сумму чисел <code>25</code> и <code>17</code>.";
-            document.getElementById("code").value = "# Напиши свой код ниже:\nprint()";
+    if (lang === "python") {
+        document.getElementById("lesson-title").textContent = "Python — Урок 1: Вывод чисел";
+        document.getElementById("lesson-theory").innerHTML = "<p>Для вывода результата на экран используется функция <code>print()</code>.</p><pre>print(10 + 5)  # Выведет 15</pre>";
+        document.getElementById("lesson-task").innerHTML = "Выведи сумму чисел <code>25</code> и <code>17</code>.";
+        document.getElementById("code").value = "print()";
+    } else {
+        document.getElementById("lesson-title").textContent = "C++ — Урок 1: Вывод текста";
+        document.getElementById("lesson-theory").innerHTML = "<p>Для вывода текста в C++ используется поток <code>std::cout</code>.</p><pre>#include &lt;iostream&gt;\nint main() {\n    std::cout &lt;&lt; \"Привет!\";\n    return 0;\n}</pre>";
+        document.getElementById("lesson-task").innerHTML = "Выведи фразу <code>Hello C++</code>.";
+        document.getElementById("code").value = "#include <iostream>\nint main() {\n    \n    return 0;\n}";
+    }
+}
+
+function goHome() {
+    document.getElementById("home-view").style.display = "block";
+    document.getElementById("lesson-view").style.display = "none";
+    document.getElementById("backBtn").style.display = "none";
+}
+
+function runCode() {
+    var userCode = document.getElementById("code").value;
+    var consoleEl = document.getElementById("console");
+    var statusEl = document.getElementById("status");
+
+    if (currentLang === "python") {
+        try {
+            var lines = userCode.split("\n");
+            var outputs = [];
+            var jsCode = "";
+            for (var i = 0; i < lines.length; i++) {
+                var line = lines[i].trim();
+                if (!line || line.charAt(0) === "#") continue;
+                if (line.indexOf("print(") === 0 && line.charAt(line.length - 1) === ")") {
+                    var inner = line.substring(6, line.length - 1);
+                    jsCode += "__out.push(String(" + inner + "));\n";
+                } else {
+                    jsCode += "var " + line + ";\n";
+                }
+            }
+            var fn = new Function("__out", jsCode);
+            fn(outputs);
+            var res = outputs.join("\n");
+            consoleEl.textContent = res || "(Пусто)";
+            if (res.trim() === "42") {
+                statusEl.style.color = "#4ade80";
+                statusEl.textContent = "✅ Верно! Ответ 42.";
+            } else {
+                statusEl.style.color = "#f87171";
+                statusEl.textContent = "❌ Ожидался ответ 42.";
+            }
+        } catch (e) {
+            consoleEl.textContent = "Ошибка: " + e.message;
+            statusEl.style.color = "#f87171";
+            statusEl.textContent = "⚠️ Ошибка в коде.";
+        }
+    } else {
+        var hasInc = userCode.indexOf("#include") !== -1 && userCode.indexOf("iostream") !== -1;
+        var hasCout = userCode.indexOf("cout") !== -1 && userCode.indexOf(";") !== -1;
+        if (!hasInc) {
+            consoleEl.textContent = "Ошибка: нет #include <iostream>";
+            statusEl.style.color = "#f87171";
+            statusEl.textContent = "⚠️ Подключи iostream.";
+            return;
+        }
+        if (hasCout && userCode.indexOf('"Hello C++"') !== -1) {
+            consoleEl.textContent = "Hello C++";
+            statusEl.style.color = "#4ade80";
+            statusEl.textContent = "✅ Верно! Программа скомпилирована.";
         } else {
-            document.getElementById("lesson-title").textContent = "C++ — Урок 1: Структура программы и вывод";
-            document.getElementById("lesson-theory").innerHTML = "<p>Любая программа на C++ начинается с функции <code>main()</code>. Для вывода текста в консоль используется поток <code>std::cout</code> из библиотеки <code>&lt;iostream&gt;</code>.</p><pre>#include &lt;iostream&gt;\n\nint main() {\n    std::cout &lt;&lt; \"Привет, мир!\";\n    return 0;\n}</pre>";
-            document.getElementById("lesson-task").innerHTML = "Напиши программу на C++, которая выведет в консоль фразу <code>Hello C++</code>.";
-            document.getElementById("code").value = "#include <iostream>\n\nint main() {\n    // Напиши вывод ниже:\n    \n    return 0;\n}";
+            consoleEl.textContent = "Неверный вывод или отсутствует точка с запятой (;)";
+            statusEl.style.color = "#f87171";
+            statusEl.textContent = "❌ Проверь std::cout << \"Hello C++\";";
         }
     }
+}
+</script>
 
-    function goHome() {
-        document.getElementById("home-view").style.display = "block";
-        document.getElementById("lesson-view").style.display = "none";
-        document.getElementById("backBtn").style.display = "none";
-    }
-
-    function runCode() {
-        var userCode = document.getElementById("code").value;
-        var consoleEl = document.getElementById("console");
-
-        if (currentLang === "python") {
-            try {
-                var lines = userCode.split("\n");
-                var outputs = [];
-                var jsLines = [];
-                lines.forEach(function(rawLine) {
-                    var commentPos = rawLine.indexOf("#");
-                    var line = (commentPos !== -1 ? rawLine.slice(0, commentPos) : rawLine).trim();
-                    if (!line) return;
-                    if (line.indexOf("print(") === 0 && line.slice(-1) === ")") {
-                        var expr = line.slice(6, -1);
-                        jsLines.push("__out.push(String(" + expr + "));");
-                    } else {
-                        jsLines.push("var " + line + ";");
-                    }
-                });
-                var runner = new Function("__out", jsLines.join("\n"));
-                runner(outputs);
-                var result = outputs.join("\n");
-                consoleEl.textContent = result || "(Пустой вывод)";
-                if (result.trim() === "42") {
-                    setStatus(true, "✅ Отлично! Задание по Python выполнено верно.");
-                } else {
-                    setStatus(false, "❌ Ожидался вывод: 42");
-                }
-            } catch (err) {
-                consoleEl.textContent = "Ошибка синтаксиса Python: " + err.message;
-                setStatus(false, "⚠️ Проверь скобки, кавычки и названия переменных.");
-            }
-        } else if (currentLang === "cpp") {
-            var hasInclude = userCode.indexOf("#include <iostream>") !== -1 || userCode.indexOf("#include<iostream>") !== -1;
-            var hasMain = userCode.indexOf("main()") !== -1;
-            var coutMatch = userCode.match(/(?:std::)?cout\s*<<\s*"([^"]*)"\s*;/);
-
-            if (!hasInclude) {
-consoleEl.textContent = "Ошибка компиляции: не подключена библиотека ";
-setStatus(false, "⚠️ Добавь #include  в начало файла.");
-return;
-}
-if (!hasMain) {
-consoleEl.textContent = "Ошибка компиляции: не найдена точка входа int main()";
-setStatus(false, "⚠️ Программа должна содержать функцию int main().");
-return;
-}
-if (coutMatch) {
-var fullMatch = coutMatch.at(0);
-var firstQuote = fullMatch.indexOf('"');
-var lastQuote = fullMatch.lastIndexOf('"');
-var printedText = fullMatch.slice(firstQuote + 1, lastQuote);
-consoleEl.textContent = printedText;
-if (printedText === "Hello C++") {
-setStatus(true, "✅ Скомпилировано без ошибок! Задание по C++ выполнено.");
-} else {
-setStatus(false, "❌ Выведено "" + printedText + "", а ожидалось "Hello C++".");
-}
-} else {
-consoleEl.textContent = "Ошибка компиляции: проверь синтаксис cout << "..." и точку с запятой (;) в конце.";
-setStatus(false, "❌ Не удалось найти корректный вывод текста.");
-}
-}
-}
-function setStatus(isSuccess, message) {
-var statusEl = document.getElementById("status");
-statusEl.style.color = isSuccess ? "#4ade80" : "#f87171";
-statusEl.textContent = message;
-}
+</body>
+</html>
